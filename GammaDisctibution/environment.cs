@@ -68,7 +68,6 @@ namespace GammaDisctibution
 
             /// тут все точки сразу считаются и возвращаются в виде списка (есесена придется делать свой индекс)
             List<double> points = environment.MyGammaDistribution_Full(1, 1);
-
             int ind = 1;
             foreach (double i in points)
             {
@@ -89,7 +88,7 @@ namespace GammaDisctibution
             seria.Points.Clear();
 
             /// тут все точки сразу считаются и возвращаются в виде списка (есесена придется делать свой индекс)
-            List<double> points = environment.MyGammaDistribution_Full(1, 1);
+            List<double> points = environment.MyGammaDistribution_Full(k, o);
 
             int ind = 1;
             foreach (double i in points)
