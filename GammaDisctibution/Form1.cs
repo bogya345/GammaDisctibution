@@ -72,7 +72,6 @@ namespace GammaDisctibution
                         }
                 }
             }
-
         }
 
         /// <summary>
@@ -91,6 +90,10 @@ namespace GammaDisctibution
             chart1.Update();
         }
 
+        private void charts_dgv_KeyUp(object sender, KeyEventArgs e)
+        {
+            //e.KeyVa
+        }
     }
 
 }
