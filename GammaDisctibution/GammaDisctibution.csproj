@@ -52,9 +52,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DAL\Charts.cs" />
+    <Compile Include="Models\Charts.cs" />
     <Compile Include="DAL\Context.cs" />
-    <Compile Include="DAL\Counting.cs" />
+    <Compile Include="Models\Counting.cs" />
     <Compile Include="environment.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>

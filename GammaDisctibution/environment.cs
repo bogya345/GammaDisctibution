@@ -47,13 +47,19 @@ namespace GammaDisctibution
                     double res = first * second;
                     resses.Add(res);
 
-
                 }
 
                 return resses;
             }
         }
 
+        /// <summary>
+        /// Создание функции(series)
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="k"></param>
+        /// <param name="o"></param>
+        /// <returns></returns>
         public static Series MakingSeria(int index, double k, double o)
         {
             Series seria = new Series(index.ToString());
@@ -81,6 +87,13 @@ namespace GammaDisctibution
             return seria;
         }
 
+        /// <summary>
+        /// Замена точек функции(series)
+        /// </summary>
+        /// <param name="old_seria"></param>
+        /// <param name="k"></param>
+        /// <param name="o"></param>
+        /// <returns></returns>
         public static Series ChangeSeria(Series old_seria, double k, double o)
         {
             Series seria = old_seria;

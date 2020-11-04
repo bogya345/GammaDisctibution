@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using GammaDisctibution.DAL;
+using GammaDisctibution.Models;
 
 namespace GammaDisctibution
 {
@@ -21,8 +22,14 @@ namespace GammaDisctibution
         {
             InitializeComponent();
 
-            this.counting_bindingSource.DataSource = new List<Counting>();
-            this.chart_bindingSource.DataSource = new List<Charts>();
+            //this.counting_bindingSource.DataSource = new List<Counting>();
+            this.chart_bindingSource.DataSource = Context.chartsList;
+
+            // настройка ширины столбцов
+            this.charts_dgv.Columns[0].Width = 40;   // uid
+            this.charts_dgv.Columns[1].Width = 60;   // k_value
+            this.charts_dgv.Columns[2].Width = 60;   // o_value
+            this.charts_dgv.Columns[3].Width = 40;   // color
         }
 
         private void bindingSource1_CurrentChanged(object sender, EventArgs e)
@@ -37,41 +44,9 @@ namespace GammaDisctibution
         /// <param name="e"></param>
         private void button1_Click(object sender, EventArgs e)
         {
-            this.chart_bindingSource.Add(new Charts(this.charts_dgv.Rows.Count, 1, 1));
-
             Series seria = environment.MakingSeria(this.charts_dgv.Rows.Count - 1, 1, 1);
+            this.chart_bindingSource.Add(new Charts(this.charts_dgv.Rows.Count, 1, 1, seria.Color.ToArgb().ToString()));
             this.chart1.Series.Add(seria);
-        }
-
-        /// <summary>
-        /// Замена точки на запятую -- но это пока что хер с ним - оно не работает
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void input_fix(object sender, DataGridViewCellEventArgs e)
-        {
-            if ((sender as DataGridView).Rows.Count != 0)
-            {
-                string tmp = "";
-                switch ((sender as DataGridView).Name)
-                {
-                    case "charts_dgv":
-                        {
-                            tmp = this.charts_dgv.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
-                            this.charts_dgv.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = tmp.Replace('.', ',');
-                            break;
-                        }
-                    case "counting_dgv":
-                        {
-                            this.charts_dgv.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = this.charts_dgv.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString().Replace('.', ',');
-                            break;
-                        }
-                    default:
-                        {
-                            break;
-                        }
-                }
-            }
         }
 
         /// <summary>
@@ -93,6 +68,14 @@ namespace GammaDisctibution
         private void charts_dgv_KeyUp(object sender, KeyEventArgs e)
         {
             //e.KeyVa
+        }
+
+        private void charts_dgv_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (e.ColumnIndex == 3)
+            {
+                charts_dgv.Rows[e.RowIndex].Cells[e.ColumnIndex].Style.BackColor = Context.chartsList.FirstOrDefault(x => x.uid == e.RowIndex).getTrueColor();
+            }
         }
     }
 

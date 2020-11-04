@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GammaDisctibution.DAL
+namespace GammaDisctibution.Models
 {
     public class Counting
     {
