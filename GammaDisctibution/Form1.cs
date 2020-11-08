@@ -25,7 +25,7 @@ namespace GammaDisctibution
 
             #region Introducing
 
-            this.webBrowser1.DocumentText = environment.html_introducing;
+            this.gamma_webBrowser.DocumentText = environment.html_gamma_distribute;
             // но нужно что-то придумать со стилями, ибо bootsrtap сюда не приделать
 
             #endregion
@@ -35,11 +35,21 @@ namespace GammaDisctibution
 
             //Context.chartsList.Add(new Charts(999, 1, 1, Color.White.ToArgb().ToString()));
 
-            // настройка ширины столбцов
-            this.charts_dgv.Columns[0].Width = 40;   // uid
-            this.charts_dgv.Columns[1].Width = 60;   // k_value
-            this.charts_dgv.Columns[2].Width = 60;   // o_value
-            this.charts_dgv.Columns[3].Width = 40;   // color
+            // настройка ширины столбцов и их имен
+            this.charts_dgv.Columns[0].HeaderText = "#";  // uid
+            this.charts_dgv.Columns[0].Width = 25;
+
+            this.charts_dgv.Columns[1].HeaderText = "K";   // k_value
+            this.charts_dgv.Columns[1].Width = 50;
+
+            this.charts_dgv.Columns[2].HeaderText = "θ";   // o_value
+            this.charts_dgv.Columns[2].Width = 50;
+
+            this.charts_dgv.Columns[3].HeaderText = "";   // color
+            this.charts_dgv.Columns[3].Width = 30;
+
+            this.charts_dgv.Columns[4].HeaderText = "Del";  // delete cell (btn)
+            this.charts_dgv.Columns[4].Width = 35;
         }
 
         /// <summary>
@@ -49,8 +59,8 @@ namespace GammaDisctibution
         /// <param name="e"></param>
         private void button1_Click(object sender, EventArgs e)
         {
-            Series seria = environment.CreateSeria(this.charts_dgv.Rows.Count - 1, 1, 1);
-            this.chart_bindingSource.Add(new Charts(this.charts_dgv.Rows.Count, 1, 1, seria.Color.ToArgb().ToString(), environment.last_points));
+            Series seria = environment.CreateSeria(this.charts_dgv.Rows.Count - 1, Convert.ToDouble(k_textBox.Text), Convert.ToDouble(o_textBox.Text));
+            this.chart_bindingSource.Add(new Charts(this.charts_dgv.Rows.Count, Convert.ToDouble(k_textBox.Text), Convert.ToDouble(o_textBox.Text), seria.Color.ToArgb().ToString(), environment.last_points));
             this.chart1.Series.Add(seria);
         }
 
@@ -75,22 +85,27 @@ namespace GammaDisctibution
         {
             if (e.ColumnIndex == 3)
             {
-                charts_dgv.Rows[e.RowIndex].Cells[e.ColumnIndex].Style.BackColor = Context.chartsList.FirstOrDefault(x => x.uid == e.RowIndex).getTrueColor();
+                Charts tmp = Context.chartsList.FirstOrDefault(x => x.uid.ToString() == this.charts_dgv.Rows[e.RowIndex].Cells[0].Value.ToString());
+                if (tmp != null)
+                    charts_dgv.Rows[e.RowIndex].Cells[e.ColumnIndex].Style.BackColor = tmp.getTrueColor();
             }
         }
 
         private void beautyNum(object sender, KeyEventArgs e)
         {
-            if ((sender as TextBox).Text.Last() == ',' || (sender as TextBox).Text.Last() == '.')
+            if (e.KeyCode != Keys.Back || (sender as TextBox).Text.Length != 0)
             {
-                //(sender as TextBox).Text = Convert.ToDouble((sender as TextBox).Text).ToString("#,#", culture);
+                if ((sender as TextBox).Text.Last() == ',' || (sender as TextBox).Text.Last() == '.')
+                {
+                    //(sender as TextBox).Text = Convert.ToDouble((sender as TextBox).Text).ToString("#,#", culture);
+                }
+                else
+                {
+                    var culture = new CultureInfo("ru-RU");
+                    (sender as TextBox).Text = Convert.ToDouble((sender as TextBox).Text).ToString("#,#", culture);
+                }
+             (sender as TextBox).Select((sender as TextBox).Text.Length, (sender as TextBox).Text.Length);
             }
-            else
-            {
-                var culture = new CultureInfo("ru-RU");
-                (sender as TextBox).Text = Convert.ToDouble((sender as TextBox).Text).ToString("#,#", culture);
-            }
-            (sender as TextBox).Select((sender as TextBox).Text.Length, (sender as TextBox).Text.Length);
         }
 
         private void charts_dgv_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
@@ -141,6 +156,46 @@ namespace GammaDisctibution
             chart1.Update();
         }
         #endregion
+
+        private void calculate_params(object sender, EventArgs e)
+        {
+            if (textBox1.Text != "" && textBox2.Text != "")
+            {
+                // математическое ожидание
+                double expected_value = Convert.ToDouble(textBox1.Text);
+
+                // дисперсия
+                double dispersion = Convert.ToDouble(textBox2.Text);
+
+                // O
+                double o_value = dispersion / expected_value;
+
+                // K
+                double k_value = expected_value / o_value;
+
+                k_textBox.Text = Math.Round(k_value, 3).ToString();
+                o_textBox.Text = Math.Round(o_value, 3).ToString();
+            }
+
+        }
+
+        private void charts_dgv_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+        {
+            (this.charts_dgv.Rows[this.charts_dgv.Rows.Count - 1].Cells[4] as DataGridViewButtonCell).Value = "DEL";
+        }
+
+        private void charts_dgv_CellMouseUp(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.ColumnIndex == 4)
+            {
+                int ind = Convert.ToInt32(this.charts_dgv.Rows[e.RowIndex].Cells[0].Value.ToString());
+                this.chart1.Series.RemoveAt(ind);
+                this.chart1.Update();
+
+                this.chart_bindingSource.RemoveAt(e.RowIndex);
+                this.charts_dgv.Update();
+            }
+        }
     }
 
 }

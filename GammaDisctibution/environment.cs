@@ -18,12 +18,29 @@ namespace GammaDisctibution
 {
     public static class environment
     {
-        public static string html_introducing
+        public static string html_gamma_distribute
         {
             get
             {
                 //using (StreamReader sr = new StreamReader("./Views/introducing.html"))
-                using (StreamReader sr = new StreamReader("../../View/introducing.html"))
+                using (StreamReader sr = new StreamReader("../../View/test.html"))
+                {
+                    string[] kek;
+
+                    string tmp = sr.ReadToEnd().Replace("\r\n", "");
+
+                    return string.Format("{0}", tmp);
+                }
+            }
+            set { }
+        }
+
+        public static string html_gamma_function
+        {
+            get
+            {
+                //using (StreamReader sr = new StreamReader("./Views/introducing.html"))
+                using (StreamReader sr = new StreamReader("../../View/gamma_func.html"))
                 {
                     string[] kek;
 
@@ -66,7 +83,8 @@ namespace GammaDisctibution
 
                     double second_above = Math.Pow(Math.E, (-i / o));
 
-                    double second_below = Math.Pow(o, k) * SpecialFunctions.Gamma(k);
+                    double gamma = SpecialFunctions.Gamma(k);
+                    double second_below = Math.Pow(o, k) * gamma;
 
                     // solving
 

@@ -93,7 +93,12 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="View\introducing.html" />
+    <Content Include="View\gamma_func.html" />
+    <Content Include="View\test.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="View\img\gamma_distribute\" />
+    <Folder Include="View\img\gamma_func\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
