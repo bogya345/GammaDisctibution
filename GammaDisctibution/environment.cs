@@ -18,38 +18,21 @@ namespace GammaDisctibution
 {
     public static class environment
     {
-        public static string html_gamma_distribute
+        public static string pdf_gamma_distribute
         {
             get
             {
-                //using (StreamReader sr = new StreamReader("./Views/introducing.html"))
-                using (StreamReader sr = new StreamReader("../../View/test.html"))
-                {
-                    string[] kek;
-
-                    string tmp = sr.ReadToEnd().Replace("\r\n", "");
-
-                    return string.Format("{0}", tmp);
-                }
+                return @"../../View/gamma_distribution.pdf";
             }
-            set { }
+            private set { }
         }
-
-        public static string html_gamma_function
+        public static string pdf_gamma_function
         {
             get
             {
-                //using (StreamReader sr = new StreamReader("./Views/introducing.html"))
-                using (StreamReader sr = new StreamReader("../../View/gamma_func.html"))
-                {
-                    string[] kek;
-
-                    string tmp = sr.ReadToEnd().Replace("\r\n", "");
-
-                    return string.Format("{0}", tmp);
-                }
+                return @"../../View/gamma_function.pdf";
             }
-            set { }
+            private set { }
         }
 
 

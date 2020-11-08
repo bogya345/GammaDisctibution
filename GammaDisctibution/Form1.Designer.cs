@@ -36,12 +36,7 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.charts_dgv = new System.Windows.Forms.DataGridView();
-            this.uidDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.kvalueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ovalueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colorDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DelCol = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.chart_bindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.o_textBox = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -60,7 +55,12 @@
             this.intro_tabControl = new System.Windows.Forms.TabControl();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.gamma_webBrowser = new System.Windows.Forms.WebBrowser();
+            this.uidDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.kvalueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ovalueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colorDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.chart_bindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.pdfViewer1 = new Spire.PdfViewer.Forms.PdfViewer();
             this.tabControl.SuspendLayout();
             this.introTab.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -69,12 +69,12 @@
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.charts_dgv)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chart_bindingSource)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.intro_tabControl.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chart_bindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -159,44 +159,11 @@
             this.charts_dgv.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.charts_dgv_CellValidating);
             this.charts_dgv.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.charts_dgv_RowsAdded);
             // 
-            // uidDataGridViewTextBoxColumn
-            // 
-            this.uidDataGridViewTextBoxColumn.DataPropertyName = "uid";
-            this.uidDataGridViewTextBoxColumn.HeaderText = "#";
-            this.uidDataGridViewTextBoxColumn.Name = "uidDataGridViewTextBoxColumn";
-            this.uidDataGridViewTextBoxColumn.Width = 25;
-            // 
-            // kvalueDataGridViewTextBoxColumn
-            // 
-            this.kvalueDataGridViewTextBoxColumn.DataPropertyName = "k_value";
-            this.kvalueDataGridViewTextBoxColumn.HeaderText = "K";
-            this.kvalueDataGridViewTextBoxColumn.Name = "kvalueDataGridViewTextBoxColumn";
-            this.kvalueDataGridViewTextBoxColumn.Width = 50;
-            // 
-            // ovalueDataGridViewTextBoxColumn
-            // 
-            this.ovalueDataGridViewTextBoxColumn.DataPropertyName = "o_value";
-            this.ovalueDataGridViewTextBoxColumn.HeaderText = "O";
-            this.ovalueDataGridViewTextBoxColumn.Name = "ovalueDataGridViewTextBoxColumn";
-            this.ovalueDataGridViewTextBoxColumn.Width = 50;
-            // 
-            // colorDataGridViewTextBoxColumn
-            // 
-            this.colorDataGridViewTextBoxColumn.DataPropertyName = "color";
-            this.colorDataGridViewTextBoxColumn.HeaderText = "";
-            this.colorDataGridViewTextBoxColumn.MaxInputLength = 1;
-            this.colorDataGridViewTextBoxColumn.Name = "colorDataGridViewTextBoxColumn";
-            this.colorDataGridViewTextBoxColumn.Width = 30;
-            // 
             // DelCol
             // 
             this.DelCol.HeaderText = "Del";
             this.DelCol.Name = "DelCol";
             this.DelCol.Width = 35;
-            // 
-            // chart_bindingSource
-            // 
-            this.chart_bindingSource.DataSource = typeof(GammaDisctibution.Models.Charts);
             // 
             // groupBox1
             // 
@@ -363,7 +330,7 @@
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.gamma_webBrowser);
+            this.tabPage2.Controls.Add(this.pdfViewer1);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -382,14 +349,53 @@
             this.tabPage3.Text = "Гамма распределение";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // gamma_webBrowser
+            // uidDataGridViewTextBoxColumn
             // 
-            this.gamma_webBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gamma_webBrowser.Location = new System.Drawing.Point(3, 3);
-            this.gamma_webBrowser.MinimumSize = new System.Drawing.Size(20, 20);
-            this.gamma_webBrowser.Name = "gamma_webBrowser";
-            this.gamma_webBrowser.Size = new System.Drawing.Size(1122, 642);
-            this.gamma_webBrowser.TabIndex = 1;
+            this.uidDataGridViewTextBoxColumn.DataPropertyName = "uid";
+            this.uidDataGridViewTextBoxColumn.HeaderText = "#";
+            this.uidDataGridViewTextBoxColumn.Name = "uidDataGridViewTextBoxColumn";
+            this.uidDataGridViewTextBoxColumn.Width = 25;
+            // 
+            // kvalueDataGridViewTextBoxColumn
+            // 
+            this.kvalueDataGridViewTextBoxColumn.DataPropertyName = "k_value";
+            this.kvalueDataGridViewTextBoxColumn.HeaderText = "K";
+            this.kvalueDataGridViewTextBoxColumn.Name = "kvalueDataGridViewTextBoxColumn";
+            this.kvalueDataGridViewTextBoxColumn.Width = 50;
+            // 
+            // ovalueDataGridViewTextBoxColumn
+            // 
+            this.ovalueDataGridViewTextBoxColumn.DataPropertyName = "o_value";
+            this.ovalueDataGridViewTextBoxColumn.HeaderText = "O";
+            this.ovalueDataGridViewTextBoxColumn.Name = "ovalueDataGridViewTextBoxColumn";
+            this.ovalueDataGridViewTextBoxColumn.Width = 50;
+            // 
+            // colorDataGridViewTextBoxColumn
+            // 
+            this.colorDataGridViewTextBoxColumn.DataPropertyName = "color";
+            this.colorDataGridViewTextBoxColumn.HeaderText = "";
+            this.colorDataGridViewTextBoxColumn.MaxInputLength = 1;
+            this.colorDataGridViewTextBoxColumn.Name = "colorDataGridViewTextBoxColumn";
+            this.colorDataGridViewTextBoxColumn.Width = 30;
+            // 
+            // chart_bindingSource
+            // 
+            this.chart_bindingSource.DataSource = typeof(GammaDisctibution.Models.Charts);
+            // 
+            // pdfViewer1
+            // 
+            this.pdfViewer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pdfViewer1.FindTextHighLightColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(153)))), ((int)(((byte)(193)))), ((int)(((byte)(218)))));
+            this.pdfViewer1.IgnoreCase = false;
+            this.pdfViewer1.IsToolBarVisible = true;
+            this.pdfViewer1.Location = new System.Drawing.Point(3, 3);
+            this.pdfViewer1.MultiPagesThreshold = 60;
+            this.pdfViewer1.Name = "pdfViewer1";
+            this.pdfViewer1.Size = new System.Drawing.Size(1122, 642);
+            this.pdfViewer1.TabIndex = 3;
+            this.pdfViewer1.Text = "pdfViewer1";
+            this.pdfViewer1.Threshold = 60;
+            this.pdfViewer1.ViewerBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(229)))), ((int)(((byte)(229)))), ((int)(((byte)(229)))));
             // 
             // Form1
             // 
@@ -409,13 +415,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.charts_dgv)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chart_bindingSource)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.intro_tabControl.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.chart_bindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -452,8 +458,8 @@
         private System.Windows.Forms.DataGridViewButtonColumn DelCol;
         private System.Windows.Forms.TabControl intro_tabControl;
         private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.WebBrowser gamma_webBrowser;
         private System.Windows.Forms.TabPage tabPage3;
+        private Spire.PdfViewer.Forms.PdfViewer pdfViewer1;
     }
 }
 

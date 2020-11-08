@@ -6,6 +6,7 @@ using System.ComponentModel.Design.Serialization;
 using System.Data;
 using System.Drawing;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,8 +26,7 @@ namespace GammaDisctibution
 
             #region Introducing
 
-            this.gamma_webBrowser.DocumentText = environment.html_gamma_distribute;
-            // но нужно что-то придумать со стилями, ибо bootsrtap сюда не приделать
+            this.pdfViewer1.LoadFromFile(environment.pdf_gamma_distribute);
 
             #endregion
 
