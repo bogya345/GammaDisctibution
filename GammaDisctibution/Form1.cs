@@ -20,13 +20,16 @@ namespace GammaDisctibution
     public partial class Form1 : Form
     {
 
+        private int created_series = 0;
+
         public Form1()
         {
             InitializeComponent();
 
             #region Introducing
 
-            this.pdfViewer1.LoadFromFile(environment.pdf_gamma_distribute);
+            this.pdfViewer_function.LoadFromFile(environment.pdf_gamma_function);
+            this.pdfViewer_distribution.LoadFromFile(environment.pdf_gamma_distribute);
 
             #endregion
 
@@ -59,9 +62,10 @@ namespace GammaDisctibution
         /// <param name="e"></param>
         private void button1_Click(object sender, EventArgs e)
         {
-            Series seria = environment.CreateSeria(this.charts_dgv.Rows.Count - 1, Convert.ToDouble(k_textBox.Text), Convert.ToDouble(o_textBox.Text));
-            this.chart_bindingSource.Add(new Charts(this.charts_dgv.Rows.Count, Convert.ToDouble(k_textBox.Text), Convert.ToDouble(o_textBox.Text), seria.Color.ToArgb().ToString(), environment.last_points));
+            Series seria = environment.CreateSeria(this.created_series, Convert.ToDouble(k_textBox.Text), Convert.ToDouble(o_textBox.Text));
+            this.chart_bindingSource.Add(new Charts(this.created_series, Convert.ToDouble(k_textBox.Text), Convert.ToDouble(o_textBox.Text), seria.Color.ToArgb().ToString(), environment.last_points));
             this.chart1.Series.Add(seria);
+            this.created_series++;
         }
 
         /// <summary>
@@ -186,6 +190,7 @@ namespace GammaDisctibution
 
         private void charts_dgv_CellMouseUp(object sender, DataGridViewCellMouseEventArgs e)
         {
+            // ячейка для удаления строки
             if (e.ColumnIndex == 4)
             {
                 int ind = Convert.ToInt32(this.charts_dgv.Rows[e.RowIndex].Cells[0].Value.ToString());

@@ -58,7 +58,7 @@ namespace GammaDisctibution
 
                 //List<double> resses = new List<double>();
 
-                for (int i = 1; i < environment.x_limit + 1; i++)
+                for (int i = 0; i < environment.x_limit + 1; i++)
                 {
                     // prepare
 
@@ -74,7 +74,6 @@ namespace GammaDisctibution
                     double second = second_above / second_below;
 
                     double res = first * second;
-
 
 
                     yield return res;

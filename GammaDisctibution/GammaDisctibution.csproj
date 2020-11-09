@@ -97,6 +97,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="View\gamma_distribution.pdf" />
+    <None Include="View\gamma_function.pdf" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
