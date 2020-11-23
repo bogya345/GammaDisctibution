@@ -39,6 +39,7 @@ namespace GammaDisctibution
         private static Random rdm = new Random();
 
         public static double x_limit = 20;
+        public static double minimum_x_limit = -(int)environment.x_limit;
         public static void Repaint_Series()
         {
 
@@ -84,16 +85,42 @@ namespace GammaDisctibution
             }
         }
 
+        public static IEnumerable<double> MyGammaFunction_Full(double k, double o)
+        {
+            if (!(k > 0 && o > 0))
+            {
+                // это ограничение должно соблюдаться
+                /// K > 0
+                /// o > 0
+                throw new Exception();
+            }
+            else
+            {
+
+                for (int i = (int)environment.minimum_x_limit; i < environment.x_limit + 1; i++)
+                {
+                    double gamma = SpecialFunctions.Gamma(k);
+                    //double gamma = SpecialFunctions.GammaUpperIncomplete(k, i);
+
+                    gamma = Math.Pow(gamma, i);
+
+                    yield return gamma;
+                }
+
+                yield break;
+            }
+        }
+
         public static List<MyPoint> last_points = new List<MyPoint>();
 
         /// <summary>
-        /// Создание функции(series)
+        /// Создание функции(series) распределения
         /// </summary>
         /// <param name="index"></param>
         /// <param name="k"></param>
         /// <param name="o"></param>
         /// <returns></returns>
-        public static Series CreateSeria(int index, double k, double o)
+        public static Series Create_Distribution_Seria(int index, double k, double o, int indTab = 1)
         {
             Series seria = new Series(index.ToString());
             seria.LegendText = index.ToString();
@@ -105,17 +132,53 @@ namespace GammaDisctibution
             //    seria.Points.AddXY(i, this.charts_dgv.Rows.Count);
             //}
 
-            environment.Draw_Points_on_Seria(ref seria, index, k, o);
+            environment.Draw_Points_on_Distrbution_Seria(ref seria, index, k, o, indTab);
 
             return seria;
         }
 
-        private static Series Draw_Points_on_Seria(ref Series seria, int index, double k, double o)
+        /// <summary>
+        /// Создание функции(series) самой гамма функции
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="k"></param>
+        /// <param name="o"></param>
+        /// <returns></returns>
+        public static Series Create_Function_Seria(int index, double k, double o)
+        {
+            Series seria = new Series(index.ToString());
+            seria.LegendText = index.ToString();
+            seria.ChartType = SeriesChartType.Point;
+
+            environment.Draw_Points_on_Function_Seria(ref seria, index, k, o);
+
+            return seria;
+        }
+
+        private static Series Draw_Points_on_Distrbution_Seria(ref Series seria, int index, double k, double o, int indTab = 1)
         {
             /// тут все точки сразу считаются и возвращаются в виде списка (есесена придется делать свой индекс)
             List<double> points = environment.MyGammaDistribution_Full(k, o).ToList();
 
-            Charts chart = Context.chartsList.FirstOrDefault(x => x.uid == index);
+            Charts chart;
+            switch (indTab)
+            {
+                case 1:
+                    {
+                        chart = Context.chartsList.FirstOrDefault(x => x.uid == index);
+                        break;
+                    }
+                case 2:
+                    {
+                        chart = Context.chartsList2.FirstOrDefault(x => x.uid == index);
+                        break;
+                    }
+                default:
+                    {
+                        throw new Exception();
+                    }
+            }
+
             environment.last_points.Clear();
 
             int ind = 1;
@@ -140,24 +203,80 @@ namespace GammaDisctibution
 
 
             seria.BorderWidth = 3;
+
+            if (indTab != 2)
+            {
+                seria.Color = Color.FromArgb(rdm.Next(256), rdm.Next(256), rdm.Next(256));
+            }
+
+            return seria;
+        }
+
+        private static Series Draw_Points_on_Function_Seria(ref Series seria, int index, double k, double o)
+        {
+            /// тут все точки сразу считаются и возвращаются в виде списка (есесена придется делать свой индекс)
+            List<double> points = environment.MyGammaFunction_Full(k, o).ToList();
+
+            Charts chart = Context.chartsList.FirstOrDefault(x => x.uid == index);
+            environment.last_points.Clear();
+
+            int ind = (int)environment.minimum_x_limit;
+            if (chart == null)
+            {
+                foreach (double i in points)
+                {
+                    //seria.Points.AddXY(ind, i);
+                    //seria.Points
+                    environment.last_points.Add(new MyPoint(ind, i));
+                    ind++;
+                }
+            }
+            else
+            {
+                foreach (double i in points)
+                {
+                    seria.Points.AddXY(ind, i);
+                    chart.appendPoint(ind, i);
+                    ind++;
+                }
+            }
+
+            seria.BorderWidth = 3;
             seria.Color = Color.FromArgb(rdm.Next(256), rdm.Next(256), rdm.Next(256));
 
             return seria;
         }
 
         /// <summary>
-        /// Замена точек функции(series)
+        /// Замена точек функции(series) распределения
         /// </summary>
-        /// <param name="old_seria"></param>
+        /// <param name="old_seria">seria распределения</param>
         /// <param name="k"></param>
         /// <param name="o"></param>
         /// <returns></returns>
-        public static Series ChangeSeria(Series old_seria, int index, double k, double o)
+        public static Series Change_Distribution_Seria(Series old_seria, int index, double k, double o, int indTab = 1)
         {
             Series seria = old_seria;
             seria.Points.Clear();
 
-            environment.Draw_Points_on_Seria(ref seria, index, k, o);
+            environment.Draw_Points_on_Distrbution_Seria(ref seria, index, k, o, indTab);
+
+            return seria;
+        }
+
+        /// <summary>
+        /// Замена точек функции(series) самой функции
+        /// </summary>
+        /// <param name="old_seria">seria функции (гамма)</param>
+        /// <param name="k"></param>
+        /// <param name="o"></param>
+        /// <returns></returns>
+        public static Series Change_Function_Seria(Series old_seria, int index, double k, double o)
+        {
+            Series seria = old_seria;
+            seria.Points.Clear();
+
+            environment.Draw_Points_on_Function_Seria(ref seria, index, k, o);
 
             return seria;
         }

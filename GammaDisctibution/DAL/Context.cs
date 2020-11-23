@@ -11,5 +11,11 @@ namespace GammaDisctibution.DAL
     static class Context
     {
         public static List<Charts> chartsList = new List<Charts>();
+
+        /// <summary>
+        /// 0 - распределение
+        /// 1 - значение x
+        /// </summary>
+        public static List<Charts>chartsList2 = new List<Charts>();
     }
 }
