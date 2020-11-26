@@ -6,6 +6,7 @@ using System.ComponentModel.Design.Serialization;
 using System.Data;
 using System.Drawing;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,16 +20,20 @@ namespace GammaDisctibution
     public partial class Form1 : Form
     {
 
+        private int created_series = 0;
+
         public Form1()
         {
             InitializeComponent();
 
             #region Introducing
 
-            this.gamma_webBrowser.DocumentText = environment.html_gamma_distribute;
-            // но нужно что-то придумать со стилями, ибо bootsrtap сюда не приделать
+            this.pdfViewer_function.LoadFromFile(environment.introducing.pdf_gamma_function);
+            this.pdfViewer_distribution.LoadFromFile(environment.introducing.pdf_gamma_distribute);
 
             #endregion
+
+            #region DataGridVie header
 
             //this.counting_bindingSource.DataSource = new List<Counting>();
             this.chart_bindingSource.DataSource = Context.chartsList;
@@ -50,7 +55,23 @@ namespace GammaDisctibution
 
             this.charts_dgv.Columns[4].HeaderText = "Del";  // delete cell (btn)
             this.charts_dgv.Columns[4].Width = 35;
+
+            #endregion
+
+            #region other
+
+
+
+            #endregion
         }
+
+
+        #region 1 Tab - Введение
+
+        #endregion
+
+
+        #region 2 Tab - Функции
 
         /// <summary>
         /// Добавление линии
@@ -59,9 +80,15 @@ namespace GammaDisctibution
         /// <param name="e"></param>
         private void button1_Click(object sender, EventArgs e)
         {
-            Series seria = environment.CreateSeria(this.charts_dgv.Rows.Count - 1, Convert.ToDouble(k_textBox.Text), Convert.ToDouble(o_textBox.Text));
-            this.chart_bindingSource.Add(new Charts(this.charts_dgv.Rows.Count, Convert.ToDouble(k_textBox.Text), Convert.ToDouble(o_textBox.Text), seria.Color.ToArgb().ToString(), environment.last_points));
+            if (k1_textBox.Text.Contains('.')) { k1_textBox.Text = k1_textBox.Text.Replace('.', ','); }
+            if (o1_textBox.Text.Contains('.')) { o1_textBox.Text = o1_textBox.Text.Replace('.', ','); }
+
+            Series seria = environment.series.CreateSeria(this.created_series, Convert.ToDouble(k1_textBox.Text), Convert.ToDouble(o1_textBox.Text));
+            this.chart_bindingSource.Add(
+                new Charts(this.created_series, Convert.ToDouble(k1_textBox.Text), Convert.ToDouble(o1_textBox.Text), seria.Color.ToArgb().ToString(), environment.memory.last_points)
+                );
             this.chart1.Series.Add(seria);
+            this.created_series++;
         }
 
         /// <summary>
@@ -76,7 +103,7 @@ namespace GammaDisctibution
             double k = Convert.ToDouble(charts_dgv.Rows[e.RowIndex].Cells[1].Value);
             double o = Convert.ToDouble(charts_dgv.Rows[e.RowIndex].Cells[2].Value);
 
-            chart1.Series[e.RowIndex] = environment.ChangeSeria(old_seria, e.RowIndex, k, o);
+            chart1.Series[e.RowIndex] = environment.series.ChangeSeria(old_seria, e.RowIndex, k, o);
 
             chart1.Update();
         }
@@ -118,7 +145,6 @@ namespace GammaDisctibution
             }
         }
 
-        #region Change x limit
         private void textBox3_TextChanged(object sender, EventArgs e)
         {
             if ((sender as TextBox).Text != "")
@@ -130,16 +156,26 @@ namespace GammaDisctibution
 
                 environment.x_limit = Convert.ToDouble((sender as TextBox).Text);
 
-                reload();
+                reload_1();
             }
         }
+
+        /// <summary>
+        /// Для изменения X
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
             textBox3.Text = (sender as TrackBar).Value.ToString();
             //environment.x_limit = Convert.ToDouble(textBox3.Text)
             //reload();
         }
-        private void reload()
+
+        /// <summary>
+        /// Перерисовка chart1
+        /// </summary>
+        private void reload_1()
         {
             int ind = 0;
             foreach (Charts i in Context.chartsList)
@@ -149,23 +185,36 @@ namespace GammaDisctibution
                 double k = Convert.ToDouble(charts_dgv.Rows[ind].Cells[1].Value);
                 double o = Convert.ToDouble(charts_dgv.Rows[ind].Cells[2].Value);
 
-                chart1.Series[ind] = environment.ChangeSeria(old_seria, ind, k, o);
+                chart1.Series[ind] = environment.series.ChangeSeria(old_seria, ind, k, o);
                 ind++;
             }
 
             chart1.Update();
         }
+
+
         #endregion
+
+
+        #region 3 Tab - Подсчет
+
+        #endregion
+
+
+        #region 3 Tab - Примеры
+
+        #endregion
+
 
         private void calculate_params(object sender, EventArgs e)
         {
-            if (textBox1.Text != "" && textBox2.Text != "")
+            if (M1_textBox.Text != "" && D1_textBox.Text != "")
             {
                 // математическое ожидание
-                double expected_value = Convert.ToDouble(textBox1.Text);
+                double expected_value = Convert.ToDouble(M1_textBox.Text);
 
                 // дисперсия
-                double dispersion = Convert.ToDouble(textBox2.Text);
+                double dispersion = Convert.ToDouble(D1_textBox.Text);
 
                 // O
                 double o_value = dispersion / expected_value;
@@ -173,8 +222,8 @@ namespace GammaDisctibution
                 // K
                 double k_value = expected_value / o_value;
 
-                k_textBox.Text = Math.Round(k_value, 3).ToString();
-                o_textBox.Text = Math.Round(o_value, 3).ToString();
+                k1_textBox.Text = Math.Round(k_value, 3).ToString();
+                o1_textBox.Text = Math.Round(o_value, 3).ToString();
             }
 
         }
@@ -186,6 +235,7 @@ namespace GammaDisctibution
 
         private void charts_dgv_CellMouseUp(object sender, DataGridViewCellMouseEventArgs e)
         {
+            // ячейка для удаления строки
             if (e.ColumnIndex == 4)
             {
                 int ind = Convert.ToInt32(this.charts_dgv.Rows[e.RowIndex].Cells[0].Value.ToString());

@@ -33,48 +33,51 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.introTab = new System.Windows.Forms.TabPage();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.intro_tabControl = new System.Windows.Forms.TabControl();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.pdfViewer_function = new Spire.PdfViewer.Forms.PdfViewer();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.pdfViewer_distribution = new Spire.PdfViewer.Forms.PdfViewer();
+            this.funcsTab = new System.Windows.Forms.TabPage();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.charts_dgv = new System.Windows.Forms.DataGridView();
-            this.uidDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.kvalueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ovalueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colorDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DelCol = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.chart_bindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.o_textBox = new System.Windows.Forms.TextBox();
+            this.o1_textBox = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.k_textBox = new System.Windows.Forms.TextBox();
+            this.k1_textBox = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.trackBar1 = new System.Windows.Forms.TrackBar();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.D1_textBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.M1_textBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.countTab = new System.Windows.Forms.TabPage();
-            this.intro_tabControl = new System.Windows.Forms.TabControl();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.gamma_webBrowser = new System.Windows.Forms.WebBrowser();
+            this.exTab = new System.Windows.Forms.TabPage();
+            this.uidDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.kvalueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ovalueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colorDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.chart_bindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tabControl.SuspendLayout();
             this.introTab.SuspendLayout();
-            this.tabPage1.SuspendLayout();
+            this.intro_tabControl.SuspendLayout();
+            this.tabPage2.SuspendLayout();
+            this.tabPage3.SuspendLayout();
+            this.funcsTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.charts_dgv)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chart_bindingSource)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
-            this.intro_tabControl.SuspendLayout();
-            this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chart_bindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -88,8 +91,9 @@
             // tabControl
             // 
             this.tabControl.Controls.Add(this.introTab);
-            this.tabControl.Controls.Add(this.tabPage1);
+            this.tabControl.Controls.Add(this.funcsTab);
             this.tabControl.Controls.Add(this.countTab);
+            this.tabControl.Controls.Add(this.exTab);
             this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl.Location = new System.Drawing.Point(0, 24);
             this.tabControl.Name = "tabControl";
@@ -104,19 +108,82 @@
             this.introTab.Name = "introTab";
             this.introTab.Size = new System.Drawing.Size(1136, 674);
             this.introTab.TabIndex = 2;
-            this.introTab.Text = "Introducing";
+            this.introTab.Text = "Введение";
             this.introTab.UseVisualStyleBackColor = true;
             // 
-            // tabPage1
+            // intro_tabControl
             // 
-            this.tabPage1.Controls.Add(this.splitContainer1);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1136, 674);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Chart";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.intro_tabControl.Controls.Add(this.tabPage2);
+            this.intro_tabControl.Controls.Add(this.tabPage3);
+            this.intro_tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.intro_tabControl.Location = new System.Drawing.Point(0, 0);
+            this.intro_tabControl.Name = "intro_tabControl";
+            this.intro_tabControl.SelectedIndex = 0;
+            this.intro_tabControl.Size = new System.Drawing.Size(1136, 674);
+            this.intro_tabControl.TabIndex = 2;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.pdfViewer_function);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(1128, 648);
+            this.tabPage2.TabIndex = 0;
+            this.tabPage2.Text = "Гамма функция";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // pdfViewer_function
+            // 
+            this.pdfViewer_function.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pdfViewer_function.FindTextHighLightColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(153)))), ((int)(((byte)(193)))), ((int)(((byte)(218)))));
+            this.pdfViewer_function.IgnoreCase = false;
+            this.pdfViewer_function.IsToolBarVisible = true;
+            this.pdfViewer_function.Location = new System.Drawing.Point(3, 3);
+            this.pdfViewer_function.MultiPagesThreshold = 60;
+            this.pdfViewer_function.Name = "pdfViewer_function";
+            this.pdfViewer_function.Size = new System.Drawing.Size(1122, 642);
+            this.pdfViewer_function.TabIndex = 3;
+            this.pdfViewer_function.Text = "pdfViewer1";
+            this.pdfViewer_function.Threshold = 60;
+            this.pdfViewer_function.ViewerBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(229)))), ((int)(((byte)(229)))), ((int)(((byte)(229)))));
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.pdfViewer_distribution);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(1128, 648);
+            this.tabPage3.TabIndex = 1;
+            this.tabPage3.Text = "Гамма распределение";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // pdfViewer_distribution
+            // 
+            this.pdfViewer_distribution.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pdfViewer_distribution.FindTextHighLightColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(153)))), ((int)(((byte)(193)))), ((int)(((byte)(218)))));
+            this.pdfViewer_distribution.IgnoreCase = false;
+            this.pdfViewer_distribution.IsToolBarVisible = true;
+            this.pdfViewer_distribution.Location = new System.Drawing.Point(3, 3);
+            this.pdfViewer_distribution.MultiPagesThreshold = 60;
+            this.pdfViewer_distribution.Name = "pdfViewer_distribution";
+            this.pdfViewer_distribution.Size = new System.Drawing.Size(1122, 642);
+            this.pdfViewer_distribution.TabIndex = 0;
+            this.pdfViewer_distribution.Text = "pdfViewer1";
+            this.pdfViewer_distribution.Threshold = 60;
+            this.pdfViewer_distribution.ViewerBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(229)))), ((int)(((byte)(229)))), ((int)(((byte)(229)))));
+            // 
+            // funcsTab
+            // 
+            this.funcsTab.Controls.Add(this.splitContainer1);
+            this.funcsTab.Location = new System.Drawing.Point(4, 22);
+            this.funcsTab.Name = "funcsTab";
+            this.funcsTab.Padding = new System.Windows.Forms.Padding(3);
+            this.funcsTab.Size = new System.Drawing.Size(1136, 674);
+            this.funcsTab.TabIndex = 0;
+            this.funcsTab.Text = "Функции";
+            this.funcsTab.UseVisualStyleBackColor = true;
             // 
             // splitContainer1
             // 
@@ -159,57 +226,24 @@
             this.charts_dgv.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.charts_dgv_CellValidating);
             this.charts_dgv.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.charts_dgv_RowsAdded);
             // 
-            // uidDataGridViewTextBoxColumn
-            // 
-            this.uidDataGridViewTextBoxColumn.DataPropertyName = "uid";
-            this.uidDataGridViewTextBoxColumn.HeaderText = "#";
-            this.uidDataGridViewTextBoxColumn.Name = "uidDataGridViewTextBoxColumn";
-            this.uidDataGridViewTextBoxColumn.Width = 25;
-            // 
-            // kvalueDataGridViewTextBoxColumn
-            // 
-            this.kvalueDataGridViewTextBoxColumn.DataPropertyName = "k_value";
-            this.kvalueDataGridViewTextBoxColumn.HeaderText = "K";
-            this.kvalueDataGridViewTextBoxColumn.Name = "kvalueDataGridViewTextBoxColumn";
-            this.kvalueDataGridViewTextBoxColumn.Width = 50;
-            // 
-            // ovalueDataGridViewTextBoxColumn
-            // 
-            this.ovalueDataGridViewTextBoxColumn.DataPropertyName = "o_value";
-            this.ovalueDataGridViewTextBoxColumn.HeaderText = "O";
-            this.ovalueDataGridViewTextBoxColumn.Name = "ovalueDataGridViewTextBoxColumn";
-            this.ovalueDataGridViewTextBoxColumn.Width = 50;
-            // 
-            // colorDataGridViewTextBoxColumn
-            // 
-            this.colorDataGridViewTextBoxColumn.DataPropertyName = "color";
-            this.colorDataGridViewTextBoxColumn.HeaderText = "";
-            this.colorDataGridViewTextBoxColumn.MaxInputLength = 1;
-            this.colorDataGridViewTextBoxColumn.Name = "colorDataGridViewTextBoxColumn";
-            this.colorDataGridViewTextBoxColumn.Width = 30;
-            // 
             // DelCol
             // 
             this.DelCol.HeaderText = "Del";
             this.DelCol.Name = "DelCol";
             this.DelCol.Width = 35;
             // 
-            // chart_bindingSource
-            // 
-            this.chart_bindingSource.DataSource = typeof(GammaDisctibution.Models.Charts);
-            // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.o_textBox);
+            this.groupBox1.Controls.Add(this.o1_textBox);
             this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Controls.Add(this.k_textBox);
+            this.groupBox1.Controls.Add(this.k1_textBox);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.textBox3);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.trackBar1);
-            this.groupBox1.Controls.Add(this.textBox2);
+            this.groupBox1.Controls.Add(this.D1_textBox);
             this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.textBox1);
+            this.groupBox1.Controls.Add(this.M1_textBox);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.button1);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
@@ -218,15 +252,15 @@
             this.groupBox1.Size = new System.Drawing.Size(452, 184);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Input values";
+            this.groupBox1.Text = "Входные параметры";
             // 
-            // o_textBox
+            // o1_textBox
             // 
-            this.o_textBox.Location = new System.Drawing.Point(193, 105);
-            this.o_textBox.Name = "o_textBox";
-            this.o_textBox.Size = new System.Drawing.Size(54, 20);
-            this.o_textBox.TabIndex = 12;
-            this.o_textBox.Text = "1";
+            this.o1_textBox.Location = new System.Drawing.Point(193, 105);
+            this.o1_textBox.Name = "o1_textBox";
+            this.o1_textBox.Size = new System.Drawing.Size(54, 20);
+            this.o1_textBox.TabIndex = 12;
+            this.o1_textBox.Text = "1";
             // 
             // label5
             // 
@@ -237,13 +271,13 @@
             this.label5.TabIndex = 11;
             this.label5.Text = "O ==";
             // 
-            // k_textBox
+            // k1_textBox
             // 
-            this.k_textBox.Location = new System.Drawing.Point(57, 108);
-            this.k_textBox.Name = "k_textBox";
-            this.k_textBox.Size = new System.Drawing.Size(54, 20);
-            this.k_textBox.TabIndex = 10;
-            this.k_textBox.Text = "1";
+            this.k1_textBox.Location = new System.Drawing.Point(57, 108);
+            this.k1_textBox.Name = "k1_textBox";
+            this.k1_textBox.Size = new System.Drawing.Size(54, 20);
+            this.k1_textBox.TabIndex = 10;
+            this.k1_textBox.Text = "1";
             // 
             // label4
             // 
@@ -283,13 +317,13 @@
             this.trackBar1.Value = 20;
             this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
             // 
-            // textBox2
+            // D1_textBox
             // 
-            this.textBox2.Location = new System.Drawing.Point(95, 53);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(76, 20);
-            this.textBox2.TabIndex = 5;
-            this.textBox2.TextChanged += new System.EventHandler(this.calculate_params);
+            this.D1_textBox.Location = new System.Drawing.Point(95, 53);
+            this.D1_textBox.Name = "D1_textBox";
+            this.D1_textBox.Size = new System.Drawing.Size(76, 20);
+            this.D1_textBox.TabIndex = 5;
+            this.D1_textBox.TextChanged += new System.EventHandler(this.calculate_params);
             // 
             // label2
             // 
@@ -300,14 +334,14 @@
             this.label2.TabIndex = 4;
             this.label2.Text = "Дисперсия:";
             // 
-            // textBox1
+            // M1_textBox
             // 
-            this.textBox1.Location = new System.Drawing.Point(95, 27);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(76, 20);
-            this.textBox1.TabIndex = 3;
-            this.textBox1.TextChanged += new System.EventHandler(this.calculate_params);
-            this.textBox1.KeyUp += new System.Windows.Forms.KeyEventHandler(this.beautyNum);
+            this.M1_textBox.Location = new System.Drawing.Point(95, 27);
+            this.M1_textBox.Name = "M1_textBox";
+            this.M1_textBox.Size = new System.Drawing.Size(76, 20);
+            this.M1_textBox.TabIndex = 3;
+            this.M1_textBox.TextChanged += new System.EventHandler(this.calculate_params);
+            this.M1_textBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.beautyNum);
             // 
             // label1
             // 
@@ -347,49 +381,50 @@
             this.countTab.Padding = new System.Windows.Forms.Padding(3);
             this.countTab.Size = new System.Drawing.Size(1136, 674);
             this.countTab.TabIndex = 1;
-            this.countTab.Text = "Counting";
+            this.countTab.Text = "Подсчет";
             this.countTab.UseVisualStyleBackColor = true;
             // 
-            // intro_tabControl
+            // exTab
             // 
-            this.intro_tabControl.Controls.Add(this.tabPage2);
-            this.intro_tabControl.Controls.Add(this.tabPage3);
-            this.intro_tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.intro_tabControl.Location = new System.Drawing.Point(0, 0);
-            this.intro_tabControl.Name = "intro_tabControl";
-            this.intro_tabControl.SelectedIndex = 0;
-            this.intro_tabControl.Size = new System.Drawing.Size(1136, 674);
-            this.intro_tabControl.TabIndex = 2;
+            this.exTab.Location = new System.Drawing.Point(4, 22);
+            this.exTab.Name = "exTab";
+            this.exTab.Size = new System.Drawing.Size(1136, 674);
+            this.exTab.TabIndex = 3;
+            this.exTab.Text = "Примеры";
+            this.exTab.UseVisualStyleBackColor = true;
             // 
-            // tabPage2
+            // uidDataGridViewTextBoxColumn
             // 
-            this.tabPage2.Controls.Add(this.gamma_webBrowser);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1128, 648);
-            this.tabPage2.TabIndex = 0;
-            this.tabPage2.Text = "Гамма функция";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.uidDataGridViewTextBoxColumn.DataPropertyName = "uid";
+            this.uidDataGridViewTextBoxColumn.HeaderText = "#";
+            this.uidDataGridViewTextBoxColumn.Name = "uidDataGridViewTextBoxColumn";
+            this.uidDataGridViewTextBoxColumn.Width = 25;
             // 
-            // tabPage3
+            // kvalueDataGridViewTextBoxColumn
             // 
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(1128, 648);
-            this.tabPage3.TabIndex = 1;
-            this.tabPage3.Text = "Гамма распределение";
-            this.tabPage3.UseVisualStyleBackColor = true;
+            this.kvalueDataGridViewTextBoxColumn.DataPropertyName = "k_value";
+            this.kvalueDataGridViewTextBoxColumn.HeaderText = "K";
+            this.kvalueDataGridViewTextBoxColumn.Name = "kvalueDataGridViewTextBoxColumn";
+            this.kvalueDataGridViewTextBoxColumn.Width = 50;
             // 
-            // gamma_webBrowser
+            // ovalueDataGridViewTextBoxColumn
             // 
-            this.gamma_webBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gamma_webBrowser.Location = new System.Drawing.Point(3, 3);
-            this.gamma_webBrowser.MinimumSize = new System.Drawing.Size(20, 20);
-            this.gamma_webBrowser.Name = "gamma_webBrowser";
-            this.gamma_webBrowser.Size = new System.Drawing.Size(1122, 642);
-            this.gamma_webBrowser.TabIndex = 1;
+            this.ovalueDataGridViewTextBoxColumn.DataPropertyName = "o_value";
+            this.ovalueDataGridViewTextBoxColumn.HeaderText = "O";
+            this.ovalueDataGridViewTextBoxColumn.Name = "ovalueDataGridViewTextBoxColumn";
+            this.ovalueDataGridViewTextBoxColumn.Width = 50;
+            // 
+            // colorDataGridViewTextBoxColumn
+            // 
+            this.colorDataGridViewTextBoxColumn.DataPropertyName = "color";
+            this.colorDataGridViewTextBoxColumn.HeaderText = "";
+            this.colorDataGridViewTextBoxColumn.MaxInputLength = 1;
+            this.colorDataGridViewTextBoxColumn.Name = "colorDataGridViewTextBoxColumn";
+            this.colorDataGridViewTextBoxColumn.Width = 30;
+            // 
+            // chart_bindingSource
+            // 
+            this.chart_bindingSource.DataSource = typeof(GammaDisctibution.Models.Charts);
             // 
             // Form1
             // 
@@ -403,19 +438,20 @@
             this.Text = "Form1";
             this.tabControl.ResumeLayout(false);
             this.introTab.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
+            this.intro_tabControl.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage3.ResumeLayout(false);
+            this.funcsTab.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.charts_dgv)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chart_bindingSource)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
-            this.intro_tabControl.ResumeLayout(false);
-            this.tabPage2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.chart_bindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -425,7 +461,7 @@
 
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.TabControl tabControl;
-        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage funcsTab;
         private System.Windows.Forms.TabPage countTab;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
@@ -435,15 +471,15 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TabPage introTab;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox D1_textBox;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox M1_textBox;
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TrackBar trackBar1;
-        private System.Windows.Forms.TextBox o_textBox;
+        private System.Windows.Forms.TextBox o1_textBox;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox k_textBox;
+        private System.Windows.Forms.TextBox k1_textBox;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.DataGridViewTextBoxColumn uidDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn kvalueDataGridViewTextBoxColumn;
@@ -452,8 +488,10 @@
         private System.Windows.Forms.DataGridViewButtonColumn DelCol;
         private System.Windows.Forms.TabControl intro_tabControl;
         private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.WebBrowser gamma_webBrowser;
         private System.Windows.Forms.TabPage tabPage3;
+        private Spire.PdfViewer.Forms.PdfViewer pdfViewer_function;
+        private Spire.PdfViewer.Forms.PdfViewer pdfViewer_distribution;
+        private System.Windows.Forms.TabPage exTab;
     }
 }
 
