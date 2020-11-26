@@ -16,6 +16,6 @@ namespace GammaDisctibution.DAL
         /// 0 - распределение
         /// 1 - значение x
         /// </summary>
-        public static List<Charts>chartsList2 = new List<Charts>();
+        public static List<Charts> chartsList2 = new List<Charts>();
     }
 }

@@ -91,9 +91,11 @@ namespace GammaDisctibution
         private void button1_Click(object sender, EventArgs e)
         {
             Series seria = environment.Create_Distribution_Seria(this.created_series, Convert.ToDouble(k_textBox.Text), Convert.ToDouble(o_textBox.Text));
-            Series seria_func = environment.Create_Function_Seria(this.created_series, Convert.ToDouble(k_textBox.Text), Convert.ToDouble(o_textBox.Text));
+            this.chart_bindingSource.Add(
+                new Charts(this.created_series, Convert.ToDouble(k_textBox.Text), Convert.ToDouble(o_textBox.Text), seria.Color.ToArgb().ToString(), environment.last_points_dustribution)
+                );
 
-            this.chart_bindingSource.Add(new Charts(this.created_series, Convert.ToDouble(k_textBox.Text), Convert.ToDouble(o_textBox.Text), seria.Color.ToArgb().ToString(), environment.last_points));
+            Series seria_func = environment.Create_Function_Seria(this.created_series, Convert.ToDouble(k_textBox.Text), Convert.ToDouble(o_textBox.Text));
 
             this.addNewSeria(seria, seria_func);
         }
@@ -313,7 +315,9 @@ namespace GammaDisctibution
             Series seria = environment.Create_Distribution_Seria(this.created_series, Convert.ToDouble(k_textBox.Text), Convert.ToDouble(o_textBox.Text), 2);
             //Series seria_func = environment.Create_Function_Seria(this.created_series, Convert.ToDouble(k_textBox.Text), Convert.ToDouble(o_textBox.Text));
 
-            Charts tmp = new Charts(this.created_series, Convert.ToDouble(k2_textBox.Text), Convert.ToDouble(o2_textBox.Text), Color.FromName("Fuchsia").ToArgb().ToString(), environment.last_points);
+            Charts tmp = new Charts(
+                this.created_series, Convert.ToDouble(k2_textBox.Text), Convert.ToDouble(o2_textBox.Text), Color.FromName("Fuchsia").ToArgb().ToString(), environment.last_points_dustribution
+                );
 
             this.chart2.Series[0] = seria;
 

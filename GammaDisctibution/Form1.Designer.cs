@@ -46,7 +46,12 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.charts_dgv = new System.Windows.Forms.DataGridView();
+            this.uidDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.kvalueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ovalueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colorDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DelCol = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.chart_bindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.o_textBox = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -68,9 +73,11 @@
             this.countTab = new System.Windows.Forms.TabPage();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.chart2 = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.xValue_label = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.xRunner = new System.Windows.Forms.TrackBar();
             this.o2_textBox = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.k2_textBox = new System.Windows.Forms.TextBox();
@@ -82,15 +89,8 @@
             this.label9 = new System.Windows.Forms.Label();
             this.M2_textBox = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.xRunner = new System.Windows.Forms.TrackBar();
-            this.label11 = new System.Windows.Forms.Label();
-            this.xValue_label = new System.Windows.Forms.Label();
-            this.uidDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.kvalueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ovalueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colorDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.chart_bindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.chart2 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
             this.tabControl.SuspendLayout();
             this.introTab.SuspendLayout();
             this.intro_tabControl.SuspendLayout();
@@ -102,6 +102,7 @@
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.charts_dgv)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chart_bindingSource)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.tabControl1.SuspendLayout();
@@ -115,12 +116,11 @@
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chart2)).BeginInit();
             this.groupBox3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.limX2_trackBar)).BeginInit();
             this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.xRunner)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chart_bindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.limX2_trackBar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chart2)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -269,11 +269,44 @@
             this.charts_dgv.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.charts_dgv_CellValidating);
             this.charts_dgv.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.charts_dgv_RowsAdded);
             // 
+            // uidDataGridViewTextBoxColumn
+            // 
+            this.uidDataGridViewTextBoxColumn.DataPropertyName = "uid";
+            this.uidDataGridViewTextBoxColumn.HeaderText = "#";
+            this.uidDataGridViewTextBoxColumn.Name = "uidDataGridViewTextBoxColumn";
+            this.uidDataGridViewTextBoxColumn.Width = 25;
+            // 
+            // kvalueDataGridViewTextBoxColumn
+            // 
+            this.kvalueDataGridViewTextBoxColumn.DataPropertyName = "k_value";
+            this.kvalueDataGridViewTextBoxColumn.HeaderText = "K";
+            this.kvalueDataGridViewTextBoxColumn.Name = "kvalueDataGridViewTextBoxColumn";
+            this.kvalueDataGridViewTextBoxColumn.Width = 50;
+            // 
+            // ovalueDataGridViewTextBoxColumn
+            // 
+            this.ovalueDataGridViewTextBoxColumn.DataPropertyName = "o_value";
+            this.ovalueDataGridViewTextBoxColumn.HeaderText = "O";
+            this.ovalueDataGridViewTextBoxColumn.Name = "ovalueDataGridViewTextBoxColumn";
+            this.ovalueDataGridViewTextBoxColumn.Width = 50;
+            // 
+            // colorDataGridViewTextBoxColumn
+            // 
+            this.colorDataGridViewTextBoxColumn.DataPropertyName = "color";
+            this.colorDataGridViewTextBoxColumn.HeaderText = "";
+            this.colorDataGridViewTextBoxColumn.MaxInputLength = 1;
+            this.colorDataGridViewTextBoxColumn.Name = "colorDataGridViewTextBoxColumn";
+            this.colorDataGridViewTextBoxColumn.Width = 30;
+            // 
             // DelCol
             // 
             this.DelCol.HeaderText = "Del";
             this.DelCol.Name = "DelCol";
             this.DelCol.Width = 35;
+            // 
+            // chart_bindingSource
+            // 
+            this.chart_bindingSource.DataSource = typeof(GammaDisctibution.Models.Charts);
             // 
             // groupBox1
             // 
@@ -508,42 +541,6 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Панель";
             // 
-            // chart2
-            // 
-            chartArea3.Name = "ChartArea1";
-            this.chart2.ChartAreas.Add(chartArea3);
-            this.chart2.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend1.Name = "Legend1";
-            this.chart2.Legends.Add(legend1);
-            this.chart2.Location = new System.Drawing.Point(0, 0);
-            this.chart2.Name = "chart2";
-            series1.BorderWidth = 3;
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series1.Color = System.Drawing.Color.Fuchsia;
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            series2.BorderWidth = 3;
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series2.Color = System.Drawing.Color.Red;
-            series2.Legend = "Legend1";
-            series2.Name = "Series2";
-            this.chart2.Series.Add(series1);
-            this.chart2.Series.Add(series2);
-            this.chart2.Size = new System.Drawing.Size(757, 668);
-            this.chart2.TabIndex = 0;
-            this.chart2.Text = "chart2";
-            // 
-            // tabPage4
-            // 
-            this.tabPage4.Location = new System.Drawing.Point(4, 22);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Size = new System.Drawing.Size(1136, 674);
-            this.tabPage4.TabIndex = 3;
-            this.tabPage4.Text = "Примеры";
-            this.tabPage4.UseVisualStyleBackColor = true;
-            // 
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.groupBox4);
@@ -565,6 +562,51 @@
             this.groupBox3.TabIndex = 1;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Входные данные";
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.xValue_label);
+            this.groupBox4.Controls.Add(this.label11);
+            this.groupBox4.Controls.Add(this.xRunner);
+            this.groupBox4.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.groupBox4.Location = new System.Drawing.Point(3, 112);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(357, 107);
+            this.groupBox4.TabIndex = 13;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Переменные";
+            // 
+            // xValue_label
+            // 
+            this.xValue_label.AutoSize = true;
+            this.xValue_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.xValue_label.Location = new System.Drawing.Point(159, 23);
+            this.xValue_label.Name = "xValue_label";
+            this.xValue_label.Size = new System.Drawing.Size(19, 20);
+            this.xValue_label.TabIndex = 16;
+            this.xValue_label.Text = "5";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label11.Location = new System.Drawing.Point(55, 23);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(98, 20);
+            this.label11.TabIndex = 15;
+            this.label11.Text = "Значение x:";
+            // 
+            // xRunner
+            // 
+            this.xRunner.LargeChange = 1;
+            this.xRunner.Location = new System.Drawing.Point(6, 56);
+            this.xRunner.Maximum = 20;
+            this.xRunner.Name = "xRunner";
+            this.xRunner.Size = new System.Drawing.Size(345, 45);
+            this.xRunner.TabIndex = 14;
+            this.xRunner.Value = 5;
+            this.xRunner.Scroll += new System.EventHandler(this.xRunner_Scroll);
+            this.xRunner.ValueChanged += new System.EventHandler(this.xRunner_Scroll);
             // 
             // o2_textBox
             // 
@@ -664,83 +706,41 @@
             this.label10.TabIndex = 2;
             this.label10.Text = "Мат.ожидание:";
             // 
-            // groupBox4
+            // chart2
             // 
-            this.groupBox4.Controls.Add(this.xValue_label);
-            this.groupBox4.Controls.Add(this.label11);
-            this.groupBox4.Controls.Add(this.xRunner);
-            this.groupBox4.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.groupBox4.Location = new System.Drawing.Point(3, 112);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(357, 107);
-            this.groupBox4.TabIndex = 13;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Переменные";
+            chartArea3.Name = "ChartArea1";
+            this.chart2.ChartAreas.Add(chartArea3);
+            this.chart2.Dock = System.Windows.Forms.DockStyle.Fill;
+            legend1.Name = "Legend1";
+            this.chart2.Legends.Add(legend1);
+            this.chart2.Location = new System.Drawing.Point(0, 0);
+            this.chart2.Name = "chart2";
+            series1.BorderWidth = 3;
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series1.Color = System.Drawing.Color.Fuchsia;
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            series2.BorderWidth = 3;
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series2.Color = System.Drawing.Color.Red;
+            series2.Legend = "Legend1";
+            series2.Name = "Series2";
+            this.chart2.Series.Add(series1);
+            this.chart2.Series.Add(series2);
+            this.chart2.Size = new System.Drawing.Size(757, 668);
+            this.chart2.TabIndex = 0;
+            this.chart2.Text = "chart2";
             // 
-            // xRunner
+            // tabPage4
             // 
-            this.xRunner.LargeChange = 1;
-            this.xRunner.Location = new System.Drawing.Point(6, 56);
-            this.xRunner.Maximum = 20;
-            this.xRunner.Name = "xRunner";
-            this.xRunner.Size = new System.Drawing.Size(345, 45);
-            this.xRunner.TabIndex = 14;
-            this.xRunner.Value = 5;
-            this.xRunner.Scroll += new System.EventHandler(this.xRunner_Scroll);
-            this.xRunner.ValueChanged += new System.EventHandler(this.xRunner_Scroll);
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label11.Location = new System.Drawing.Point(55, 23);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(98, 20);
-            this.label11.TabIndex = 15;
-            this.label11.Text = "Значение x:";
-            // 
-            // xValue_label
-            // 
-            this.xValue_label.AutoSize = true;
-            this.xValue_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.xValue_label.Location = new System.Drawing.Point(159, 23);
-            this.xValue_label.Name = "xValue_label";
-            this.xValue_label.Size = new System.Drawing.Size(19, 20);
-            this.xValue_label.TabIndex = 16;
-            this.xValue_label.Text = "5";
-            // 
-            // uidDataGridViewTextBoxColumn
-            // 
-            this.uidDataGridViewTextBoxColumn.DataPropertyName = "uid";
-            this.uidDataGridViewTextBoxColumn.HeaderText = "#";
-            this.uidDataGridViewTextBoxColumn.Name = "uidDataGridViewTextBoxColumn";
-            this.uidDataGridViewTextBoxColumn.Width = 25;
-            // 
-            // kvalueDataGridViewTextBoxColumn
-            // 
-            this.kvalueDataGridViewTextBoxColumn.DataPropertyName = "k_value";
-            this.kvalueDataGridViewTextBoxColumn.HeaderText = "K";
-            this.kvalueDataGridViewTextBoxColumn.Name = "kvalueDataGridViewTextBoxColumn";
-            this.kvalueDataGridViewTextBoxColumn.Width = 50;
-            // 
-            // ovalueDataGridViewTextBoxColumn
-            // 
-            this.ovalueDataGridViewTextBoxColumn.DataPropertyName = "o_value";
-            this.ovalueDataGridViewTextBoxColumn.HeaderText = "O";
-            this.ovalueDataGridViewTextBoxColumn.Name = "ovalueDataGridViewTextBoxColumn";
-            this.ovalueDataGridViewTextBoxColumn.Width = 50;
-            // 
-            // colorDataGridViewTextBoxColumn
-            // 
-            this.colorDataGridViewTextBoxColumn.DataPropertyName = "color";
-            this.colorDataGridViewTextBoxColumn.HeaderText = "";
-            this.colorDataGridViewTextBoxColumn.MaxInputLength = 1;
-            this.colorDataGridViewTextBoxColumn.Name = "colorDataGridViewTextBoxColumn";
-            this.colorDataGridViewTextBoxColumn.Width = 30;
-            // 
-            // chart_bindingSource
-            // 
-            this.chart_bindingSource.DataSource = typeof(GammaDisctibution.Models.Charts);
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Size = new System.Drawing.Size(1136, 674);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.Text = "Примеры";
+            this.tabPage4.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -763,6 +763,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.charts_dgv)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chart_bindingSource)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
@@ -777,14 +778,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.chart2)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.limX2_trackBar)).EndInit();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.xRunner)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chart_bindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.limX2_trackBar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chart2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
