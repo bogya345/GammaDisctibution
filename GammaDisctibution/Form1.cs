@@ -58,9 +58,11 @@ namespace GammaDisctibution
 
             #endregion
 
-            #region other
+            #region 3 tab prepare
 
+            //this.drawSeria(new object(), new EventArgs());
 
+            reload_2();
 
             #endregion
         }
@@ -87,6 +89,9 @@ namespace GammaDisctibution
             this.chart_bindingSource.Add(
                 new Charts(this.created_series, Convert.ToDouble(k1_textBox.Text), Convert.ToDouble(o1_textBox.Text), seria.Color.ToArgb().ToString(), environment.memory.last_points)
                 );
+            //Context.chartsList.Add(
+            //    new Charts(this.created_series, Convert.ToDouble(k1_textBox.Text), Convert.ToDouble(o1_textBox.Text), seria.Color.ToArgb().ToString(), environment.memory.last_points)
+            //    );
             this.chart1.Series.Add(seria);
             this.created_series++;
         }
@@ -108,6 +113,11 @@ namespace GammaDisctibution
             chart1.Update();
         }
 
+        /// <summary>
+        /// Для показа цвета
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void charts_dgv_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             if (e.ColumnIndex == 3)
@@ -118,6 +128,54 @@ namespace GammaDisctibution
             }
         }
 
+        /// <summary>
+        /// Нажатие на ячейки
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void charts_dgv_CellMouseUp(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            // ячейка для выбора цвета
+            if (e.ColumnIndex == 3)
+            {
+                if (this.colorDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    //this.charts_dgv.Rows[e.RowIndex].Cells[3].Value = "";
+
+                    this.charts_dgv.Rows[e.RowIndex].Cells[3].Style.BackColor = this.colorDialog1.Color;
+                    Context.chartsList.FirstOrDefault(x => x.uid == e.RowIndex).color = this.colorDialog1.Color.ToArgb().ToString();
+                    //item
+                    this.chart_bindingSource.DataSource = null;
+                    this.chart_bindingSource.DataSource = Context.chartsList;
+
+                    this.chart1.Series[e.RowIndex].Color = this.colorDialog1.Color;
+
+                    reload_1();
+                    this.charts_dgv.Refresh();
+                }
+            }
+
+            // ячейка для удаления строки
+            if (e.ColumnIndex == 4)
+            {
+                if (MessageBox.Show("Вы уверены?", "Внимание!", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    MessageBox.Show("А я бы на вашем месте не был бы так уверен");
+                    int ind = Convert.ToInt32(this.charts_dgv.Rows[e.RowIndex].Cells[0].Value.ToString());
+                    this.chart1.Series.RemoveAt(ind);
+                    this.chart1.Update();
+
+                    this.chart_bindingSource.RemoveAt(e.RowIndex);
+                    this.charts_dgv.Update();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Думаю можно забить на это
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void beautyNum(object sender, KeyEventArgs e)
         {
             if (e.KeyCode != Keys.Back || (sender as TextBox).Text.Length != 0)
@@ -135,6 +193,11 @@ namespace GammaDisctibution
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void charts_dgv_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
         {
             if (e.FormattedValue.ToString().Contains('.'))
@@ -145,6 +208,11 @@ namespace GammaDisctibution
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void textBox3_TextChanged(object sender, EventArgs e)
         {
             if ((sender as TextBox).Text != "")
@@ -154,11 +222,23 @@ namespace GammaDisctibution
                     (sender as TextBox).Text = (sender as TextBox).Text.Replace('.', ',');
                 }
 
-                environment.x_limit = Convert.ToDouble((sender as TextBox).Text);
+                environment.x_limit1 = Convert.ToDouble((sender as TextBox).Text);
 
                 reload_1();
             }
         }
+
+        /// <summary>
+        /// Добавление кнопки удаления и показа плотности
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void charts_dgv_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+        {
+            (this.charts_dgv.Rows[this.charts_dgv.Rows.Count - 1].Cells[4] as DataGridViewButtonCell).Value = "DEL";
+            (this.charts_dgv.Rows[this.charts_dgv.Rows.Count - 1].Cells[5] as DataGridViewButtonCell).Value = "Плотность";
+        }
+
 
         /// <summary>
         /// Для изменения X
@@ -167,7 +247,7 @@ namespace GammaDisctibution
         /// <param name="e"></param>
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
-            textBox3.Text = (sender as TrackBar).Value.ToString();
+            x_limit1_textBox.Text = (sender as TrackBar).Value.ToString();
             //environment.x_limit = Convert.ToDouble(textBox3.Text)
             //reload();
         }
@@ -198,54 +278,117 @@ namespace GammaDisctibution
 
         #region 3 Tab - Подсчет
 
+        private void change_xRunner(object sender, EventArgs e)
+        {
+            xValue_label.Text = xRunner.Value.ToString();
+            reload_2();
+        }
+
+        private void change_x_lim2(object sender, EventArgs e)
+        {
+            x_limit2_textBox.Text = (sender as TrackBar).Value.ToString();
+            environment.x_limit2 = (sender as TrackBar).Value;
+        }
+
+        private void change_x_limit2_textBox(object sender, EventArgs e)
+        {
+            if (true)
+            {
+                xRunner.Maximum = Convert.ToInt32(x_limit2_textBox.Text);
+
+                if ((sender as TextBox).Text != "")
+                {
+                    if ((sender as TextBox).Text.Contains('.'))
+                    {
+                        (sender as TextBox).Text = (sender as TextBox).Text.Replace('.', ',');
+                    }
+
+                    reload_2();
+                }
+            }
+        }
+
+        private void reload_2()
+        {
+            // распределение
+            Series old_seria = chart2.Series[0];
+            double k = Convert.ToDouble(k2_textBox.Text);
+            double o = Convert.ToDouble(o2_textBox.Text);
+            chart2.Series[0] = environment.series.ChangeSeria(old_seria, 0, k, o, 2);
+
+            Context.singleChart = new Charts(0, 1, 1, Color.Blue.ToArgb().ToString(), environment.memory.last_points);
+
+            // значение x
+            int x = Convert.ToInt32(xValue_label.Text);
+            double y = chart2.Series[0].Points.FirstOrDefault(x_ => x_.XValue == x).YValues[0];
+            yValue_label.Text = Math.Round(y, 5).ToString();
+            chart2.Series[1].Points.Clear();
+            chart2.Series[1].Points.AddXY(x, y);
+            chart2.Series[1].Points.AddXY(x, 0);
+
+            chart2.Update();
+        }
+
         #endregion
 
 
-        #region 3 Tab - Примеры
+        #region 4 Tab - Примеры
 
         #endregion
 
+
+        #region 2 & 3 Tabs
 
         private void calculate_params(object sender, EventArgs e)
         {
-            if (M1_textBox.Text != "" && D1_textBox.Text != "")
+            if ((sender as TextBox).Name.Contains("M1") || (sender as TextBox).Name.Contains("D1"))
             {
-                // математическое ожидание
-                double expected_value = Convert.ToDouble(M1_textBox.Text);
+                if (M1_textBox.Text != "" && D1_textBox.Text != "")
+                {
+                    // математическое ожидание
+                    double expected_value = Convert.ToDouble(M1_textBox.Text);
 
-                // дисперсия
-                double dispersion = Convert.ToDouble(D1_textBox.Text);
+                    // дисперсия
+                    double dispersion = Convert.ToDouble(D1_textBox.Text);
 
-                // O
-                double o_value = dispersion / expected_value;
+                    // O
+                    double o_value = dispersion / expected_value;
 
-                // K
-                double k_value = expected_value / o_value;
+                    // K
+                    double k_value = expected_value / o_value;
 
-                k1_textBox.Text = Math.Round(k_value, 3).ToString();
-                o1_textBox.Text = Math.Round(o_value, 3).ToString();
+                    k1_textBox.Text = Math.Round(k_value, 3).ToString();
+                    o1_textBox.Text = Math.Round(o_value, 3).ToString();
+                }
+                return;
+            }
+
+            if ((sender as TextBox).Name.Contains("M2") || (sender as TextBox).Name.Contains("D2"))
+            {
+                if (M1_textBox.Text != "" && D1_textBox.Text != "")
+                {
+                    // математическое ожидание
+                    double expected_value = Convert.ToDouble(M1_textBox.Text);
+
+                    // дисперсия
+                    double dispersion = Convert.ToDouble(D1_textBox.Text);
+
+                    // O
+                    double o_value = dispersion / expected_value;
+
+                    // K
+                    double k_value = expected_value / o_value;
+
+                    k1_textBox.Text = Math.Round(k_value, 3).ToString();
+                    o1_textBox.Text = Math.Round(o_value, 3).ToString();
+                }
+                return;
             }
 
         }
 
-        private void charts_dgv_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
-        {
-            (this.charts_dgv.Rows[this.charts_dgv.Rows.Count - 1].Cells[4] as DataGridViewButtonCell).Value = "DEL";
-        }
+        #endregion
 
-        private void charts_dgv_CellMouseUp(object sender, DataGridViewCellMouseEventArgs e)
-        {
-            // ячейка для удаления строки
-            if (e.ColumnIndex == 4)
-            {
-                int ind = Convert.ToInt32(this.charts_dgv.Rows[e.RowIndex].Cells[0].Value.ToString());
-                this.chart1.Series.RemoveAt(ind);
-                this.chart1.Update();
-
-                this.chart_bindingSource.RemoveAt(e.RowIndex);
-                this.charts_dgv.Update();
-            }
-        }
     }
 
 }

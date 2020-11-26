@@ -21,7 +21,8 @@ namespace GammaDisctibution
 
         private static Random rdm = new Random();
 
-        public static double x_limit = 20;
+        public static double x_limit1 = 20;
+        public static double x_limit2 = 20;
 
 
         public static class memory
@@ -74,7 +75,7 @@ namespace GammaDisctibution
                 //    seria.Points.AddXY(i, this.charts_dgv.Rows.Count);
                 //}
 
-                environment.series.Draw_Points_on_Seria(ref seria, index, k, o);
+                environment.series.Draw_Points_on_Seria(ref seria, index, k, o, 1);
 
                 return seria;
             }
@@ -87,37 +88,67 @@ namespace GammaDisctibution
             /// <param name="k"></param>
             /// <param name="o"></param>
             /// <returns></returns>
-            private static Series Draw_Points_on_Seria(ref Series seria, int index, double k, double o)
+            private static Series Draw_Points_on_Seria(ref Series seria, int index, double k, double o, int indTab)
             {
-                /// тут все точки сразу считаются и возвращаются в виде списка (есесена придется делать свой индекс)
-                List<double> points = environment.distribution.MyGammaDistribution_Full(k, o).ToList();
 
-                Charts chart = Context.chartsList.FirstOrDefault(x => x.uid == index);
-                environment.memory.last_points.Clear();
-
-                int ind = 1;
-                if (chart == null)
+                switch (indTab)
                 {
-                    foreach (double i in points)
-                    {
-                        seria.Points.AddXY(ind, i);
-                        environment.memory.last_points.Add(new MyPoint(ind, i));
-                        ind++;
-                    }
-                    seria.Color = Color.FromArgb(rdm.Next(256), rdm.Next(256), rdm.Next(256));
-                }
-                else
-                {
-                    foreach (double i in points)
-                    {
-                        seria.Points.AddXY(ind, i);
-                        chart.appendPoint(ind, i);
-                        ind++;
-                    }
-                }
+                    case 1:
+                        {
+                            /// тут все точки сразу считаются и возвращаются в виде списка (есесена придется делать свой индекс)
+                            List<double> points = environment.distribution.MyGammaDistribution_Full(k, o, environment.x_limit1).ToList();
 
+                            Charts chart = Context.chartsList.FirstOrDefault(x => x.uid == index);
+                            environment.memory.last_points.Clear();
 
-                seria.BorderWidth = 3;
+                            int ind = 1;
+                            if (chart == null)
+                            {
+                                foreach (double i in points)
+                                {
+                                    seria.Points.AddXY(ind, i);
+                                    environment.memory.last_points.Add(new MyPoint(ind, i));
+                                    ind++;
+                                }
+                                seria.Color = Color.FromArgb(rdm.Next(256), rdm.Next(256), rdm.Next(256));
+                            }
+                            else
+                            {
+                                foreach (double i in points)
+                                {
+                                    seria.Points.AddXY(ind, i);
+                                    chart.appendPoint(ind, i);
+                                    environment.memory.last_points.Add(new MyPoint(ind, i));
+                                    ind++;
+                                }
+                            }
+                            seria.BorderWidth = 3;
+
+                            return seria;
+                        }
+
+                    case 2:
+                        {
+                            /// тут все точки сразу считаются и возвращаются в виде списка (есесена придется делать свой индекс)
+                            List<double> points = environment.distribution.MyGammaDistribution_Full(k, o, environment.x_limit2).ToList();
+
+                            Charts chart = Context.singleChart;
+                            environment.memory.last_points.Clear();
+
+                            int ind = 1;
+
+                            foreach (double i in points)
+                            {
+                                seria.Points.AddXY(ind, i);
+                                if (chart != null) { chart.appendPoint(ind, i); }
+                                ind++;
+                            }
+
+                            seria.BorderWidth = 3;
+
+                            return seria;
+                        }
+                }
 
                 return seria;
             }
@@ -129,12 +160,12 @@ namespace GammaDisctibution
             /// <param name="k"></param>
             /// <param name="o"></param>
             /// <returns></returns>
-            public static Series ChangeSeria(Series old_seria, int index, double k, double o)
+            public static Series ChangeSeria(Series old_seria, int index, double k, double o, int indTab = 1)
             {
                 Series seria = old_seria;
                 seria.Points.Clear();
 
-                environment.series.Draw_Points_on_Seria(ref seria, index, k, o);
+                environment.series.Draw_Points_on_Seria(ref seria, index, k, o, indTab);
 
                 return seria;
             }
@@ -150,7 +181,7 @@ namespace GammaDisctibution
             /// <param name="k"></param>
             /// <param name="o"></param>
             /// <returns></returns>
-            public static IEnumerable<double> MyGammaDistribution_Full(double k, double o)
+            public static IEnumerable<double> MyGammaDistribution_Full(double k, double o, double x_limit)
             {
                 if (!(k > 0 && o > 0))
                 {
@@ -164,7 +195,7 @@ namespace GammaDisctibution
 
                     //List<double> resses = new List<double>();
 
-                    for (int i = 0; i < environment.x_limit + 1; i++)
+                    for (double i = 0.000001; i < x_limit + 1; i = Math.Round(++i))
                     {
                         // prepare
 

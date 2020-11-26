@@ -10,6 +10,9 @@ namespace GammaDisctibution.DAL
 {
     static class Context
     {
+        //public static Charts[] chartsList;
         public static List<Charts> chartsList = new List<Charts>();
+
+        public static Charts singleChart;
     }
 }
