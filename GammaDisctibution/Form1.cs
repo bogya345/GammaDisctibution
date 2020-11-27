@@ -86,7 +86,7 @@ namespace GammaDisctibution
             if (k1_textBox.Text.Contains('.')) { k1_textBox.Text = k1_textBox.Text.Replace('.', ','); }
             if (o1_textBox.Text.Contains('.')) { o1_textBox.Text = o1_textBox.Text.Replace('.', ','); }
 
-            Series seria = environment.series.CreateSeria(this.created_series, Convert.ToDouble(k1_textBox.Text), Convert.ToDouble(o1_textBox.Text));
+            Series seria = environment.density.CreateSeria(this.created_series, Convert.ToDouble(k1_textBox.Text), Convert.ToDouble(o1_textBox.Text));
             this.chart_bindingSource.Add(
                 new Charts(this.created_series, Convert.ToDouble(k1_textBox.Text), Convert.ToDouble(o1_textBox.Text), seria.Color.ToArgb().ToString(), environment.memory.last_points)
                 );
@@ -114,7 +114,7 @@ namespace GammaDisctibution
             double k = Convert.ToDouble(charts_dgv.Rows[e.RowIndex].Cells[1].Value);
             double o = Convert.ToDouble(charts_dgv.Rows[e.RowIndex].Cells[2].Value);
 
-            chart1_density.Series[e.RowIndex] = environment.series.ChangeSeria(old_seria, e.RowIndex, k, o);
+            chart1_density.Series[e.RowIndex] = environment.density.ChangeSeria(old_seria, e.RowIndex, k, o);
 
             chart1_density.Update();
         }
@@ -276,7 +276,7 @@ namespace GammaDisctibution
                 string tmp = charts_dgv.Rows[ind].Cells[0].Value.ToString();
                 double k = Convert.ToDouble(charts_dgv.Rows[ind].Cells[1].Value);
                 double o = Convert.ToDouble(charts_dgv.Rows[ind].Cells[2].Value);
-                chart1_density.Series[ind] = environment.series.ChangeSeria(old_seria, ind, k, o);
+                chart1_density.Series[ind] = environment.density.ChangeSeria(old_seria, ind, k, o);
 
                 Series old_seria_2 = chart1_distribution.Series[ind];
                 chart1_distribution.Series[ind] = environment.distribution.ChangeSeria(old_seria_2, ind);
@@ -297,6 +297,8 @@ namespace GammaDisctibution
         private void change_xRunner(object sender, EventArgs e)
         {
             xDensityValue_label.Text = x_density_Runner.Value.ToString();
+            xDistributionValue_label.Text = x_distribution_Runner.Value.ToString();
+
             reload_2();
         }
 
@@ -311,6 +313,7 @@ namespace GammaDisctibution
             if (true)
             {
                 x_density_Runner.Maximum = Convert.ToInt32(x_limit2_textBox.Text);
+                x_distribution_Runner.Maximum = Convert.ToInt32(x_limit2_textBox.Text);
 
                 if ((sender as TextBox).Text != "")
                 {
@@ -326,11 +329,12 @@ namespace GammaDisctibution
 
         private void reload_2()
         {
-            // распределение
+            #region Плотность
+            // плотность
             Series old_seria = chart2_density.Series[0];
             double k = Convert.ToDouble(k2_textBox.Text);
             double o = Convert.ToDouble(o2_textBox.Text);
-            chart2_density.Series[0] = environment.series.ChangeSeria(old_seria, 0, k, o, 2);
+            chart2_density.Series[0] = environment.density.ChangeSeria(old_seria, 0, k, o, 2);
 
             Context.singleChart = new Charts(0, 1, 1, Color.Blue.ToArgb().ToString(), environment.memory.last_points);
 
@@ -338,20 +342,35 @@ namespace GammaDisctibution
             int x = Convert.ToInt32(xDensityValue_label.Text);
             double y = chart2_density.Series[0].Points.FirstOrDefault(x_ => x_.XValue == x).YValues[0];
             yDensityValue_label.Text = Math.Round(y, 5).ToString();
+
             chart2_density.Series[1].Points.Clear();
             chart2_density.Series[1].Points.AddXY(x, y);
             chart2_density.Series[1].Points.AddXY(x, 0);
 
-            chart2_density.Update();
+            //chart2_density.Update();
+            #endregion
+
+            #region Распределение
+            // распределение
+            Series old_seria_2 = chart2_distribution.Series[0];
+            chart2_distribution.Series[0] = environment.distribution.ChangeSeria(old_seria_2, 0, 2);
+
+            //Context.singleChart = new Charts(0, 1, 1, Color.Orange.ToArgb().ToString(), );
+
+            // значение x
+            int x2 = Convert.ToInt32(xDistributionValue_label.Text);
+            double y2 = chart2_distribution.Series[0].Points.FirstOrDefault(x_ => x_.XValue == x2).YValues[0];
+            yDistributionValue_label.Text = Math.Round(y2, 5).ToString();
+
+            chart2_distribution.Series[1].Points.Clear();
+            chart2_distribution.Series[1].Points.AddXY(x2, y2);
+            chart2_distribution.Series[1].Points.AddXY(x2, 0);
+
+            //chart2_distribution.Update();
+            #endregion
         }
 
         #endregion
-
-
-        #region 4 Tab - Примеры
-
-        #endregion
-
 
         #region 2 & 3 Tabs
 
@@ -402,6 +421,11 @@ namespace GammaDisctibution
             }
 
         }
+
+
+        #endregion
+
+        #region 4 Tab - Примеры
 
         #endregion
 

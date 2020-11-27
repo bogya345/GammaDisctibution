@@ -11,7 +11,7 @@ namespace GammaDisctibution.DAL
     static class Context
     {
         //public static Charts[] chartsList;
-        public static List<Charts> chart1_distribution_List = new List<Charts>();
+        //public static List<Charts> chart1_distribution_List = new List<Charts>();
         public static List<Charts> chart1_density_List = new List<Charts>();
 
         public static Charts singleChart;

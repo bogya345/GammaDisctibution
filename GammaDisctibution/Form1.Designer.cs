@@ -35,8 +35,8 @@
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.introTab = new System.Windows.Forms.TabPage();
@@ -48,6 +48,13 @@
             this.funcsTab = new System.Windows.Forms.TabPage();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.charts_dgv = new System.Windows.Forms.DataGridView();
+            this.uidDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.kvalueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ovalueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colorDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DelCol = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.density = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.chart_bindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.o1_textBox = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -61,15 +68,26 @@
             this.M1_textBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.chart1_density = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.chart1_distribution = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.countTab = new System.Windows.Forms.TabPage();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.yDistributionValue_label = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.xDistributionValue_label = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.x_distribution_Runner = new System.Windows.Forms.TrackBar();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.yDensityValue_label = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.xDensityValue_label = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.x_density_Runner = new System.Windows.Forms.TrackBar();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.o2_textBox = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.k2_textBox = new System.Windows.Forms.TextBox();
@@ -81,31 +99,13 @@
             this.label9 = new System.Windows.Forms.Label();
             this.M2_textBox = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
-            this.exTab = new System.Windows.Forms.TabPage();
-            this.colorDialog1 = new System.Windows.Forms.ColorDialog();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.chart1_density = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.chart1_distribution = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.yDistributionValue_label = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.xDistributionValue_label = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
-            this.x_distribution_Runner = new System.Windows.Forms.TrackBar();
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabPage5 = new System.Windows.Forms.TabPage();
-            this.tabPage6 = new System.Windows.Forms.TabPage();
             this.chart2_density = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.tabPage6 = new System.Windows.Forms.TabPage();
             this.chart2_distribution = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.DelCol = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.density = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.uidDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.kvalueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ovalueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colorDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.chart_bindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.exTab = new System.Windows.Forms.TabPage();
+            this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.tabControl.SuspendLayout();
             this.introTab.SuspendLayout();
             this.intro_tabControl.SuspendLayout();
@@ -117,30 +117,30 @@
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.charts_dgv)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chart_bindingSource)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
+            this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chart1_density)).BeginInit();
+            this.tabPage4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chart1_distribution)).BeginInit();
             this.countTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            this.groupBox3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.x_density_Runner)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).BeginInit();
-            this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
-            this.tabPage4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chart1_density)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chart1_distribution)).BeginInit();
             this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.x_distribution_Runner)).BeginInit();
+            this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.x_density_Runner)).BeginInit();
+            this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).BeginInit();
             this.tabControl2.SuspendLayout();
             this.tabPage5.SuspendLayout();
-            this.tabPage6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart2_density)).BeginInit();
+            this.tabPage6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart2_distribution)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chart_bindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -290,6 +290,51 @@
             this.charts_dgv.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.charts_dgv_CellValidating);
             this.charts_dgv.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.charts_dgv_RowsAdded);
             // 
+            // uidDataGridViewTextBoxColumn
+            // 
+            this.uidDataGridViewTextBoxColumn.DataPropertyName = "uid";
+            this.uidDataGridViewTextBoxColumn.HeaderText = "#";
+            this.uidDataGridViewTextBoxColumn.Name = "uidDataGridViewTextBoxColumn";
+            this.uidDataGridViewTextBoxColumn.Width = 25;
+            // 
+            // kvalueDataGridViewTextBoxColumn
+            // 
+            this.kvalueDataGridViewTextBoxColumn.DataPropertyName = "k_value";
+            this.kvalueDataGridViewTextBoxColumn.HeaderText = "K";
+            this.kvalueDataGridViewTextBoxColumn.Name = "kvalueDataGridViewTextBoxColumn";
+            this.kvalueDataGridViewTextBoxColumn.Width = 50;
+            // 
+            // ovalueDataGridViewTextBoxColumn
+            // 
+            this.ovalueDataGridViewTextBoxColumn.DataPropertyName = "o_value";
+            this.ovalueDataGridViewTextBoxColumn.HeaderText = "O";
+            this.ovalueDataGridViewTextBoxColumn.Name = "ovalueDataGridViewTextBoxColumn";
+            this.ovalueDataGridViewTextBoxColumn.Width = 50;
+            // 
+            // colorDataGridViewTextBoxColumn
+            // 
+            this.colorDataGridViewTextBoxColumn.DataPropertyName = "color";
+            this.colorDataGridViewTextBoxColumn.HeaderText = "";
+            this.colorDataGridViewTextBoxColumn.MaxInputLength = 1;
+            this.colorDataGridViewTextBoxColumn.Name = "colorDataGridViewTextBoxColumn";
+            this.colorDataGridViewTextBoxColumn.Width = 30;
+            // 
+            // DelCol
+            // 
+            this.DelCol.HeaderText = "Del";
+            this.DelCol.Name = "DelCol";
+            this.DelCol.Width = 35;
+            // 
+            // density
+            // 
+            this.density.HeaderText = "_";
+            this.density.Name = "density";
+            this.density.Width = 65;
+            // 
+            // chart_bindingSource
+            // 
+            this.chart_bindingSource.DataSource = typeof(GammaDisctibution.Models.Charts);
+            // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.o1_textBox);
@@ -420,6 +465,65 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage4);
+            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl1.Location = new System.Drawing.Point(0, 0);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(674, 668);
+            this.tabControl1.TabIndex = 0;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.chart1_density);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(666, 642);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "Плотность";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // chart1_density
+            // 
+            chartArea1.AxisX.Title = "x";
+            chartArea1.AxisY.MaximumAutoSize = 90F;
+            chartArea1.AxisY.Title = "гамма-функция";
+            chartArea1.Name = "ChartArea1";
+            this.chart1_density.ChartAreas.Add(chartArea1);
+            this.chart1_density.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.chart1_density.Location = new System.Drawing.Point(3, 3);
+            this.chart1_density.Name = "chart1_density";
+            this.chart1_density.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Excel;
+            this.chart1_density.Size = new System.Drawing.Size(660, 636);
+            this.chart1_density.TabIndex = 1;
+            this.chart1_density.Text = "chart1";
+            // 
+            // tabPage4
+            // 
+            this.tabPage4.Controls.Add(this.chart1_distribution);
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(666, 642);
+            this.tabPage4.TabIndex = 1;
+            this.tabPage4.Text = "Распределение";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // chart1_distribution
+            // 
+            chartArea2.Name = "ChartArea1";
+            this.chart1_distribution.ChartAreas.Add(chartArea2);
+            this.chart1_distribution.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.chart1_distribution.Location = new System.Drawing.Point(3, 3);
+            this.chart1_distribution.Name = "chart1_distribution";
+            this.chart1_distribution.Size = new System.Drawing.Size(660, 636);
+            this.chart1_distribution.TabIndex = 0;
+            this.chart1_distribution.Text = "chart1";
+            // 
             // countTab
             // 
             this.countTab.Controls.Add(this.splitContainer2);
@@ -450,26 +554,74 @@
             this.splitContainer2.SplitterDistance = 452;
             this.splitContainer2.TabIndex = 1;
             // 
-            // groupBox2
+            // groupBox4
             // 
-            this.groupBox2.Controls.Add(this.o2_textBox);
-            this.groupBox2.Controls.Add(this.label6);
-            this.groupBox2.Controls.Add(this.k2_textBox);
-            this.groupBox2.Controls.Add(this.label7);
-            this.groupBox2.Controls.Add(this.x_limit2_textBox);
-            this.groupBox2.Controls.Add(this.label8);
-            this.groupBox2.Controls.Add(this.trackBar2);
-            this.groupBox2.Controls.Add(this.D2_textBox);
-            this.groupBox2.Controls.Add(this.label9);
-            this.groupBox2.Controls.Add(this.M2_textBox);
-            this.groupBox2.Controls.Add(this.label10);
-            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.groupBox2.Location = new System.Drawing.Point(0, 0);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(452, 132);
-            this.groupBox2.TabIndex = 0;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Входные параметры";
+            this.groupBox4.Controls.Add(this.yDistributionValue_label);
+            this.groupBox4.Controls.Add(this.label14);
+            this.groupBox4.Controls.Add(this.xDistributionValue_label);
+            this.groupBox4.Controls.Add(this.label16);
+            this.groupBox4.Controls.Add(this.x_distribution_Runner);
+            this.groupBox4.Dock = System.Windows.Forms.DockStyle.Top;
+            this.groupBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.groupBox4.Location = new System.Drawing.Point(0, 246);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(452, 114);
+            this.groupBox4.TabIndex = 14;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Рапределение (X):";
+            // 
+            // yDistributionValue_label
+            // 
+            this.yDistributionValue_label.AutoSize = true;
+            this.yDistributionValue_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.yDistributionValue_label.Location = new System.Drawing.Point(345, 26);
+            this.yDistributionValue_label.Name = "yDistributionValue_label";
+            this.yDistributionValue_label.Size = new System.Drawing.Size(20, 25);
+            this.yDistributionValue_label.TabIndex = 4;
+            this.yDistributionValue_label.Text = "*";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label14.Location = new System.Drawing.Point(217, 26);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(122, 25);
+            this.label14.TabIndex = 3;
+            this.label14.Text = "Значение y:";
+            // 
+            // xDistributionValue_label
+            // 
+            this.xDistributionValue_label.AutoSize = true;
+            this.xDistributionValue_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.xDistributionValue_label.Location = new System.Drawing.Point(159, 26);
+            this.xDistributionValue_label.Name = "xDistributionValue_label";
+            this.xDistributionValue_label.Size = new System.Drawing.Size(23, 25);
+            this.xDistributionValue_label.TabIndex = 2;
+            this.xDistributionValue_label.Text = "4";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label16.Location = new System.Drawing.Point(31, 26);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(122, 25);
+            this.label16.TabIndex = 1;
+            this.label16.Text = "Значение x:";
+            // 
+            // x_distribution_Runner
+            // 
+            this.x_distribution_Runner.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.x_distribution_Runner.LargeChange = 1;
+            this.x_distribution_Runner.Location = new System.Drawing.Point(3, 66);
+            this.x_distribution_Runner.Maximum = 20;
+            this.x_distribution_Runner.Minimum = 1;
+            this.x_distribution_Runner.Name = "x_distribution_Runner";
+            this.x_distribution_Runner.Size = new System.Drawing.Size(446, 45);
+            this.x_distribution_Runner.TabIndex = 0;
+            this.x_distribution_Runner.Value = 4;
+            this.x_distribution_Runner.Scroll += new System.EventHandler(this.change_xRunner);
             // 
             // groupBox3
             // 
@@ -540,6 +692,27 @@
             this.x_density_Runner.Value = 4;
             this.x_density_Runner.Scroll += new System.EventHandler(this.change_xRunner);
             this.x_density_Runner.ValueChanged += new System.EventHandler(this.change_xRunner);
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.o2_textBox);
+            this.groupBox2.Controls.Add(this.label6);
+            this.groupBox2.Controls.Add(this.k2_textBox);
+            this.groupBox2.Controls.Add(this.label7);
+            this.groupBox2.Controls.Add(this.x_limit2_textBox);
+            this.groupBox2.Controls.Add(this.label8);
+            this.groupBox2.Controls.Add(this.trackBar2);
+            this.groupBox2.Controls.Add(this.D2_textBox);
+            this.groupBox2.Controls.Add(this.label9);
+            this.groupBox2.Controls.Add(this.M2_textBox);
+            this.groupBox2.Controls.Add(this.label10);
+            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.groupBox2.Location = new System.Drawing.Point(0, 0);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(452, 132);
+            this.groupBox2.TabIndex = 0;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Входные параметры";
             // 
             // o2_textBox
             // 
@@ -638,142 +811,6 @@
             this.label10.TabIndex = 2;
             this.label10.Text = "Мат.ожидание:";
             // 
-            // exTab
-            // 
-            this.exTab.Location = new System.Drawing.Point(4, 22);
-            this.exTab.Name = "exTab";
-            this.exTab.Size = new System.Drawing.Size(1136, 674);
-            this.exTab.TabIndex = 3;
-            this.exTab.Text = "Примеры";
-            this.exTab.UseVisualStyleBackColor = true;
-            // 
-            // tabControl1
-            // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage4);
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point(0, 0);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(674, 668);
-            this.tabControl1.TabIndex = 0;
-            // 
-            // tabPage1
-            // 
-            this.tabPage1.Controls.Add(this.chart1_density);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(666, 642);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Плотность";
-            this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // tabPage4
-            // 
-            this.tabPage4.Controls.Add(this.chart1_distribution);
-            this.tabPage4.Location = new System.Drawing.Point(4, 22);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(666, 642);
-            this.tabPage4.TabIndex = 1;
-            this.tabPage4.Text = "Распределение";
-            this.tabPage4.UseVisualStyleBackColor = true;
-            // 
-            // chart1_density
-            // 
-            chartArea1.AxisX.Title = "x";
-            chartArea1.AxisY.MaximumAutoSize = 90F;
-            chartArea1.AxisY.Title = "гамма-функция";
-            chartArea1.Name = "ChartArea1";
-            this.chart1_density.ChartAreas.Add(chartArea1);
-            this.chart1_density.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.chart1_density.Location = new System.Drawing.Point(3, 3);
-            this.chart1_density.Name = "chart1_density";
-            this.chart1_density.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Excel;
-            this.chart1_density.Size = new System.Drawing.Size(660, 636);
-            this.chart1_density.TabIndex = 1;
-            this.chart1_density.Text = "chart1";
-            // 
-            // chart1_distribution
-            // 
-            chartArea2.Name = "ChartArea1";
-            this.chart1_distribution.ChartAreas.Add(chartArea2);
-            this.chart1_distribution.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.chart1_distribution.Location = new System.Drawing.Point(3, 3);
-            this.chart1_distribution.Name = "chart1_distribution";
-            this.chart1_distribution.Size = new System.Drawing.Size(660, 636);
-            this.chart1_distribution.TabIndex = 0;
-            this.chart1_distribution.Text = "chart1";
-            // 
-            // groupBox4
-            // 
-            this.groupBox4.Controls.Add(this.yDistributionValue_label);
-            this.groupBox4.Controls.Add(this.label14);
-            this.groupBox4.Controls.Add(this.xDistributionValue_label);
-            this.groupBox4.Controls.Add(this.label16);
-            this.groupBox4.Controls.Add(this.x_distribution_Runner);
-            this.groupBox4.Dock = System.Windows.Forms.DockStyle.Top;
-            this.groupBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.groupBox4.Location = new System.Drawing.Point(0, 246);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(452, 114);
-            this.groupBox4.TabIndex = 14;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Рапределение (X):";
-            // 
-            // yDistributionValue_label
-            // 
-            this.yDistributionValue_label.AutoSize = true;
-            this.yDistributionValue_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.yDistributionValue_label.Location = new System.Drawing.Point(345, 26);
-            this.yDistributionValue_label.Name = "yDistributionValue_label";
-            this.yDistributionValue_label.Size = new System.Drawing.Size(20, 25);
-            this.yDistributionValue_label.TabIndex = 4;
-            this.yDistributionValue_label.Text = "*";
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label14.Location = new System.Drawing.Point(217, 26);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(122, 25);
-            this.label14.TabIndex = 3;
-            this.label14.Text = "Значение y:";
-            // 
-            // xDistributionValue_label
-            // 
-            this.xDistributionValue_label.AutoSize = true;
-            this.xDistributionValue_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.xDistributionValue_label.Location = new System.Drawing.Point(159, 26);
-            this.xDistributionValue_label.Name = "xDistributionValue_label";
-            this.xDistributionValue_label.Size = new System.Drawing.Size(23, 25);
-            this.xDistributionValue_label.TabIndex = 2;
-            this.xDistributionValue_label.Text = "4";
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label16.Location = new System.Drawing.Point(31, 26);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(122, 25);
-            this.label16.TabIndex = 1;
-            this.label16.Text = "Значение x:";
-            // 
-            // x_distribution_Runner
-            // 
-            this.x_distribution_Runner.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.x_distribution_Runner.LargeChange = 1;
-            this.x_distribution_Runner.Location = new System.Drawing.Point(3, 66);
-            this.x_distribution_Runner.Maximum = 20;
-            this.x_distribution_Runner.Minimum = 1;
-            this.x_distribution_Runner.Name = "x_distribution_Runner";
-            this.x_distribution_Runner.Size = new System.Drawing.Size(446, 45);
-            this.x_distribution_Runner.TabIndex = 0;
-            this.x_distribution_Runner.Value = 4;
-            // 
             // tabControl2
             // 
             this.tabControl2.Controls.Add(this.tabPage5);
@@ -796,17 +833,6 @@
             this.tabPage5.Text = "Плотность";
             this.tabPage5.UseVisualStyleBackColor = true;
             // 
-            // tabPage6
-            // 
-            this.tabPage6.Controls.Add(this.chart2_distribution);
-            this.tabPage6.Location = new System.Drawing.Point(4, 22);
-            this.tabPage6.Name = "tabPage6";
-            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage6.Size = new System.Drawing.Size(666, 642);
-            this.tabPage6.TabIndex = 1;
-            this.tabPage6.Text = "Распределение";
-            this.tabPage6.UseVisualStyleBackColor = true;
-            // 
             // chart2_density
             // 
             chartArea3.AxisX.Title = "x";
@@ -822,82 +848,60 @@
             series1.ChartArea = "ChartArea1";
             series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
             series1.Color = System.Drawing.Color.Blue;
-            series1.Name = "Series1";
+            series1.Name = "Series21_mean";
             series2.BorderWidth = 3;
             series2.ChartArea = "ChartArea1";
             series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
             series2.Color = System.Drawing.Color.Red;
-            series2.Name = "Series3";
+            series2.Name = "Series21_runner";
             this.chart2_density.Series.Add(series1);
             this.chart2_density.Series.Add(series2);
             this.chart2_density.Size = new System.Drawing.Size(660, 636);
             this.chart2_density.TabIndex = 1;
             this.chart2_density.Text = "chart2";
             // 
+            // tabPage6
+            // 
+            this.tabPage6.Controls.Add(this.chart2_distribution);
+            this.tabPage6.Location = new System.Drawing.Point(4, 22);
+            this.tabPage6.Name = "tabPage6";
+            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage6.Size = new System.Drawing.Size(666, 642);
+            this.tabPage6.TabIndex = 1;
+            this.tabPage6.Text = "Распределение";
+            this.tabPage6.UseVisualStyleBackColor = true;
+            // 
             // chart2_distribution
             // 
             chartArea4.Name = "ChartArea1";
             this.chart2_distribution.ChartAreas.Add(chartArea4);
             this.chart2_distribution.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend1.Name = "Legend1";
-            this.chart2_distribution.Legends.Add(legend1);
             this.chart2_distribution.Location = new System.Drawing.Point(3, 3);
             this.chart2_distribution.Name = "chart2_distribution";
             series3.BorderWidth = 3;
             series3.ChartArea = "ChartArea1";
             series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
             series3.Color = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            series3.Legend = "Legend1";
-            series3.Name = "Series2";
+            series3.Name = "Series22_mean";
+            series4.BorderWidth = 3;
+            series4.ChartArea = "ChartArea1";
+            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series4.Color = System.Drawing.Color.LimeGreen;
+            series4.Name = "Series22_runner";
             this.chart2_distribution.Series.Add(series3);
+            this.chart2_distribution.Series.Add(series4);
             this.chart2_distribution.Size = new System.Drawing.Size(660, 636);
             this.chart2_distribution.TabIndex = 0;
             this.chart2_distribution.Text = "chart1";
             // 
-            // DelCol
+            // exTab
             // 
-            this.DelCol.HeaderText = "Del";
-            this.DelCol.Name = "DelCol";
-            this.DelCol.Width = 35;
-            // 
-            // density
-            // 
-            this.density.HeaderText = "_";
-            this.density.Name = "density";
-            this.density.Width = 65;
-            // 
-            // uidDataGridViewTextBoxColumn
-            // 
-            this.uidDataGridViewTextBoxColumn.DataPropertyName = "uid";
-            this.uidDataGridViewTextBoxColumn.HeaderText = "#";
-            this.uidDataGridViewTextBoxColumn.Name = "uidDataGridViewTextBoxColumn";
-            this.uidDataGridViewTextBoxColumn.Width = 25;
-            // 
-            // kvalueDataGridViewTextBoxColumn
-            // 
-            this.kvalueDataGridViewTextBoxColumn.DataPropertyName = "k_value";
-            this.kvalueDataGridViewTextBoxColumn.HeaderText = "K";
-            this.kvalueDataGridViewTextBoxColumn.Name = "kvalueDataGridViewTextBoxColumn";
-            this.kvalueDataGridViewTextBoxColumn.Width = 50;
-            // 
-            // ovalueDataGridViewTextBoxColumn
-            // 
-            this.ovalueDataGridViewTextBoxColumn.DataPropertyName = "o_value";
-            this.ovalueDataGridViewTextBoxColumn.HeaderText = "O";
-            this.ovalueDataGridViewTextBoxColumn.Name = "ovalueDataGridViewTextBoxColumn";
-            this.ovalueDataGridViewTextBoxColumn.Width = 50;
-            // 
-            // colorDataGridViewTextBoxColumn
-            // 
-            this.colorDataGridViewTextBoxColumn.DataPropertyName = "color";
-            this.colorDataGridViewTextBoxColumn.HeaderText = "";
-            this.colorDataGridViewTextBoxColumn.MaxInputLength = 1;
-            this.colorDataGridViewTextBoxColumn.Name = "colorDataGridViewTextBoxColumn";
-            this.colorDataGridViewTextBoxColumn.Width = 30;
-            // 
-            // chart_bindingSource
-            // 
-            this.chart_bindingSource.DataSource = typeof(GammaDisctibution.Models.Charts);
+            this.exTab.Location = new System.Drawing.Point(4, 22);
+            this.exTab.Name = "exTab";
+            this.exTab.Size = new System.Drawing.Size(1136, 674);
+            this.exTab.TabIndex = 3;
+            this.exTab.Text = "Примеры";
+            this.exTab.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -920,34 +924,34 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.charts_dgv)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chart_bindingSource)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
+            this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.chart1_density)).EndInit();
+            this.tabPage4.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.chart1_distribution)).EndInit();
             this.countTab.ResumeLayout(false);
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.x_density_Runner)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).EndInit();
-            this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage4.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.chart1_density)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chart1_distribution)).EndInit();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.x_distribution_Runner)).EndInit();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.x_density_Runner)).EndInit();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).EndInit();
             this.tabControl2.ResumeLayout(false);
             this.tabPage5.ResumeLayout(false);
-            this.tabPage6.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chart2_density)).EndInit();
+            this.tabPage6.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chart2_distribution)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chart_bindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

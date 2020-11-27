@@ -41,7 +41,7 @@ namespace GammaDisctibution.Models
         //public void setPoints(List<Point> points) { this.clearPoints(); this.points = new List<Point>(points); }
         //public void appendPoint(Point point) { this.points.Add(new MyPoint(); }
         public void appendPoint(double x, double y) { this.points_density.Add(new MyPoint(x, y)); }
-        public void clearPoints() { this.points_density.Clear(); }
+        public void clearPoints() { this.points_density.Clear(); this.points_distribution.Clear(); }
 
 
         private List<MyPoint> points_distribution = new List<MyPoint>();

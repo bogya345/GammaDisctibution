@@ -54,7 +54,7 @@ namespace GammaDisctibution
         }
 
 
-        public static class series
+        public static class density
         {
             /// <summary>
             /// Создание функции(series)
@@ -75,7 +75,7 @@ namespace GammaDisctibution
                 //    seria.Points.AddXY(i, this.charts_dgv.Rows.Count);
                 //}
 
-                environment.series.Draw_Points_on_Seria(ref seria, index, k, o, 1);
+                environment.density.Draw_Points_on_Seria(ref seria, index, k, o, 1);
 
                 return seria;
             }
@@ -132,15 +132,18 @@ namespace GammaDisctibution
                             /// тут все точки сразу считаются и возвращаются в виде списка (есесена придется делать свой индекс)
                             List<double> points = environment.density.MyGammaDensity_Full(k, o, environment.x_limit2).ToList();
 
-                            Charts chart = Context.singleChart;
+                            if (Context.singleChart != null)
+                            {
+                                Context.singleChart.clearPoints();
+                            }
                             environment.memory.last_points.Clear();
 
                             int ind = 1;
-
                             foreach (double i in points)
                             {
                                 seria.Points.AddXY(ind, i);
-                                if (chart != null) { chart.appendPoint(ind, i); }
+                                if (Context.singleChart != null) { Context.singleChart.appendPoint(ind, i); }
+                                environment.memory.last_points.Add(new MyPoint(ind, i));
                                 ind++;
                             }
 
@@ -165,15 +168,17 @@ namespace GammaDisctibution
                 Series seria = old_seria;
                 seria.Points.Clear();
 
-                environment.series.Draw_Points_on_Seria(ref seria, index, k, o, indTab);
+                environment.density.Draw_Points_on_Seria(ref seria, index, k, o, indTab);
+
+                List<MyPoint> tmp = new List<MyPoint>();
+                foreach (var i in seria.Points)
+                {
+                    tmp.Add(new MyPoint(i.XValue, i.YValues[0]));
+                }
+                Context.singleChart = new Charts(0, k, o, old_seria.Color.ToArgb().ToString(), tmp);
 
                 return seria;
             }
-        }
-
-
-        public static class density
-        {
 
             /// <summary>
             /// Вычисление точек гамма-функции полностью
@@ -280,6 +285,7 @@ namespace GammaDisctibution
                             {
                                 seria.Points.AddXY(ind, i);
                                 if (chart != null) { chart.appendPoint(ind, i); }
+                                environment.memory.last_points.Add(new MyPoint(ind, i));
                                 ind++;
                             }
 
@@ -299,7 +305,7 @@ namespace GammaDisctibution
             /// <param name="o"></param>
             /// <returns></returns>
             /// <returns></returns>
-            public static IEnumerable<double> MyGammaDestribution_Full(List<double> sample, double x_limit)
+            public static IEnumerable<double> MyGammaDistribution_Full(List<double> sample, double x_limit)
             {
                 List<double> res = new List<double>();
                 res.Add(0);
@@ -316,6 +322,7 @@ namespace GammaDisctibution
             {
                 Series seria = old_seria;
                 seria.Points.Clear();
+                seria.Points.AddXY(0, 0);
 
                 switch (indTab)
                 {
@@ -335,7 +342,7 @@ namespace GammaDisctibution
                         {
                             foreach (MyPoint i in environment.memory.last_points)
                             {
-                                seria.Points.AddXY(i.X, i.Y);
+                                seria.Points.AddXY(i.X, (i.Y + seria.Points.Last().YValues[0]));
                             }
 
                             break;
@@ -349,7 +356,7 @@ namespace GammaDisctibution
 
                 //environment.distribution.Draw_Points_on_Seria(ref seria, index, indTab);
 
-                seria.ChartType = SeriesChartType.Column;
+                //seria.ChartType = SeriesChartType.Column;
 
                 return seria;
             }
