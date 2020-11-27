@@ -96,9 +96,9 @@ namespace GammaDisctibution
                     case 1:
                         {
                             /// тут все точки сразу считаются и возвращаются в виде списка (есесена придется делать свой индекс)
-                            List<double> points = environment.distribution.MyGammaDistribution_Full(k, o, environment.x_limit1).ToList();
+                            List<double> points = environment.density.MyGammaDensity_Full(k, o, environment.x_limit1).ToList();
 
-                            Charts chart = Context.chartsList.FirstOrDefault(x => x.uid == index);
+                            Charts chart = Context.chart1_density_List.FirstOrDefault(x => x.uid == index);
                             environment.memory.last_points.Clear();
 
                             int ind = 1;
@@ -130,7 +130,7 @@ namespace GammaDisctibution
                     case 2:
                         {
                             /// тут все точки сразу считаются и возвращаются в виде списка (есесена придется делать свой индекс)
-                            List<double> points = environment.distribution.MyGammaDistribution_Full(k, o, environment.x_limit2).ToList();
+                            List<double> points = environment.density.MyGammaDensity_Full(k, o, environment.x_limit2).ToList();
 
                             Charts chart = Context.singleChart;
                             environment.memory.last_points.Clear();
@@ -172,7 +172,7 @@ namespace GammaDisctibution
         }
 
 
-        public static class distribution
+        public static class density
         {
 
             /// <summary>
@@ -181,7 +181,8 @@ namespace GammaDisctibution
             /// <param name="k"></param>
             /// <param name="o"></param>
             /// <returns></returns>
-            public static IEnumerable<double> MyGammaDistribution_Full(double k, double o, double x_limit)
+            /// <returns></returns>
+            public static IEnumerable<double> MyGammaDensity_Full(double k, double o, double x_limit)
             {
                 if (!(k > 0 && o > 0))
                 {
@@ -206,6 +207,7 @@ namespace GammaDisctibution
                         double gamma = SpecialFunctions.Gamma(k);
                         double second_below = Math.Pow(o, k) * gamma;
 
+
                         // solving
 
                         double second = second_above / second_below;
@@ -222,6 +224,151 @@ namespace GammaDisctibution
             }
 
 
+        }
+
+        public static class distribution
+        {
+            public static Series Draw_Points_on_Seria(ref Series seria, int index, double k, double o, int indTab)
+            {
+                switch (indTab)
+                {
+                    case 1:
+                        {
+                            /// тут все точки сразу считаются и возвращаются в виде списка (есесена придется делать свой индекс)
+                            List<double> points = environment.density.MyGammaDensity_Full(k, o, environment.x_limit1).ToList();
+
+                            Charts chart = Context.chart1_density_List.FirstOrDefault(x => x.uid == index);
+                            environment.memory.last_points.Clear();
+
+                            int ind = 1;
+                            if (chart == null)
+                            {
+                                foreach (double i in points)
+                                {
+                                    seria.Points.AddXY(ind, i);
+                                    environment.memory.last_points.Add(new MyPoint(ind, i));
+                                    ind++;
+                                }
+                                seria.Color = Color.FromArgb(rdm.Next(256), rdm.Next(256), rdm.Next(256));
+                            }
+                            else
+                            {
+                                foreach (double i in points)
+                                {
+                                    seria.Points.AddXY(ind, i);
+                                    chart.appendPoint(ind, i);
+                                    environment.memory.last_points.Add(new MyPoint(ind, i));
+                                    ind++;
+                                }
+                            }
+                            seria.BorderWidth = 3;
+
+                            return seria;
+                        }
+
+                    case 2:
+                        {
+                            /// тут все точки сразу считаются и возвращаются в виде списка (есесена придется делать свой индекс)
+                            List<double> points = environment.density.MyGammaDensity_Full(k, o, environment.x_limit2).ToList();
+
+                            Charts chart = Context.singleChart;
+                            environment.memory.last_points.Clear();
+
+                            int ind = 1;
+
+                            foreach (double i in points)
+                            {
+                                seria.Points.AddXY(ind, i);
+                                if (chart != null) { chart.appendPoint(ind, i); }
+                                ind++;
+                            }
+
+                            seria.BorderWidth = 3;
+
+                            return seria;
+                        }
+                }
+
+                return seria;
+            }
+
+            /// <summary>
+            /// Вычисление точек гамма-функции распределение
+            /// </summary>
+            /// <param name="k"></param>
+            /// <param name="o"></param>
+            /// <returns></returns>
+            /// <returns></returns>
+            public static IEnumerable<double> MyGammaDestribution_Full(List<double> sample, double x_limit)
+            {
+                List<double> res = new List<double>();
+                res.Add(0);
+
+                for (int i = 1; i < sample.Count; i++)
+                {
+                    res.Add(sample[i] + res.Last());
+                }
+
+                return res;
+            }
+
+            public static Series ChangeSeria(Series old_seria, int index, int indTab = 1)
+            {
+                Series seria = old_seria;
+                seria.Points.Clear();
+
+                switch (indTab)
+                {
+                    case 1:
+                        {
+                            int ind = 1;
+                            seria.Points.AddXY(0, 0);
+                            foreach (MyPoint i in environment.memory.last_points)
+                            {
+                                seria.Points.AddXY(i.X, (i.Y + seria.Points.Last().YValues[0]));
+                            }
+
+                            break;
+                        }
+
+                    case 2:
+                        {
+                            foreach (MyPoint i in environment.memory.last_points)
+                            {
+                                seria.Points.AddXY(i.X, i.Y);
+                            }
+
+                            break;
+                        }
+
+                    default:
+                        {
+                            throw new Exception();
+                        }
+                }
+
+                //environment.distribution.Draw_Points_on_Seria(ref seria, index, indTab);
+
+                seria.ChartType = SeriesChartType.Column;
+
+                return seria;
+            }
+
+
+        }
+
+        public static Series CreateSeria(Color color, List<MyPoint> points)
+        {
+            Series seria = new Series();
+
+            seria.Color = color;
+
+            foreach (MyPoint i in points)
+            {
+                seria.Points.AddXY(i.X, i.Y);
+            }
+
+            return seria;
         }
 
 

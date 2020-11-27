@@ -36,7 +36,7 @@ namespace GammaDisctibution
             #region DataGridVie header
 
             //this.counting_bindingSource.DataSource = new List<Counting>();
-            this.chart_bindingSource.DataSource = Context.chartsList;
+            this.chart_bindingSource.DataSource = Context.chart1_density_List;
 
             //Context.chartsList.Add(new Charts(999, 1, 1, Color.White.ToArgb().ToString()));
 
@@ -77,6 +77,7 @@ namespace GammaDisctibution
 
         /// <summary>
         /// Добавление линии
+        /// #createseria
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -92,7 +93,12 @@ namespace GammaDisctibution
             //Context.chartsList.Add(
             //    new Charts(this.created_series, Convert.ToDouble(k1_textBox.Text), Convert.ToDouble(o1_textBox.Text), seria.Color.ToArgb().ToString(), environment.memory.last_points)
             //    );
-            this.chart1.Series.Add(seria);
+
+            this.chart1_density.Series.Add(seria);
+
+            this.chart1_distribution.Series.Add(environment.CreateSeria(seria.Color, Context.chart1_density_List.Last().getPoints_distribution()));
+
+
             this.created_series++;
         }
 
@@ -103,14 +109,14 @@ namespace GammaDisctibution
         /// <param name="e"></param>
         private void charts_dgv_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-            Series old_seria = chart1.Series[e.RowIndex];
+            Series old_seria = chart1_density.Series[e.RowIndex];
             string tmp = charts_dgv.Rows[e.RowIndex].Cells[0].Value.ToString();
             double k = Convert.ToDouble(charts_dgv.Rows[e.RowIndex].Cells[1].Value);
             double o = Convert.ToDouble(charts_dgv.Rows[e.RowIndex].Cells[2].Value);
 
-            chart1.Series[e.RowIndex] = environment.series.ChangeSeria(old_seria, e.RowIndex, k, o);
+            chart1_density.Series[e.RowIndex] = environment.series.ChangeSeria(old_seria, e.RowIndex, k, o);
 
-            chart1.Update();
+            chart1_density.Update();
         }
 
         /// <summary>
@@ -122,9 +128,15 @@ namespace GammaDisctibution
         {
             if (e.ColumnIndex == 3)
             {
-                Charts tmp = Context.chartsList.FirstOrDefault(x => x.uid.ToString() == this.charts_dgv.Rows[e.RowIndex].Cells[0].Value.ToString());
+                Charts tmp = Context.chart1_density_List.FirstOrDefault(x => x.uid.ToString() == this.charts_dgv.Rows[e.RowIndex].Cells[0].Value.ToString());
                 if (tmp != null)
                     charts_dgv.Rows[e.RowIndex].Cells[e.ColumnIndex].Style.BackColor = tmp.getTrueColor();
+            }
+
+            if (e.ColumnIndex == 4)
+            {
+                (this.charts_dgv.Rows[this.charts_dgv.Rows.Count - 1].Cells[4] as DataGridViewButtonCell).Value = "DEL";
+                (this.charts_dgv.Rows[this.charts_dgv.Rows.Count - 1].Cells[5] as DataGridViewButtonCell).Value = "Подробнее";
             }
         }
 
@@ -143,12 +155,12 @@ namespace GammaDisctibution
                     //this.charts_dgv.Rows[e.RowIndex].Cells[3].Value = "";
 
                     this.charts_dgv.Rows[e.RowIndex].Cells[3].Style.BackColor = this.colorDialog1.Color;
-                    Context.chartsList.FirstOrDefault(x => x.uid == e.RowIndex).color = this.colorDialog1.Color.ToArgb().ToString();
+                    Context.chart1_density_List.FirstOrDefault(x => x.uid == e.RowIndex).color = this.colorDialog1.Color.ToArgb().ToString();
                     //item
                     this.chart_bindingSource.DataSource = null;
-                    this.chart_bindingSource.DataSource = Context.chartsList;
+                    this.chart_bindingSource.DataSource = Context.chart1_density_List;
 
-                    this.chart1.Series[e.RowIndex].Color = this.colorDialog1.Color;
+                    this.chart1_density.Series[e.RowIndex].Color = this.colorDialog1.Color;
 
                     reload_1();
                     this.charts_dgv.Refresh();
@@ -160,10 +172,9 @@ namespace GammaDisctibution
             {
                 if (MessageBox.Show("Вы уверены?", "Внимание!", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
-                    MessageBox.Show("А я бы на вашем месте не был бы так уверен");
                     int ind = Convert.ToInt32(this.charts_dgv.Rows[e.RowIndex].Cells[0].Value.ToString());
-                    this.chart1.Series.RemoveAt(ind);
-                    this.chart1.Update();
+                    this.chart1_density.Series.RemoveAt(ind);
+                    this.chart1_density.Update();
 
                     this.chart_bindingSource.RemoveAt(e.RowIndex);
                     this.charts_dgv.Update();
@@ -236,7 +247,8 @@ namespace GammaDisctibution
         private void charts_dgv_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
         {
             (this.charts_dgv.Rows[this.charts_dgv.Rows.Count - 1].Cells[4] as DataGridViewButtonCell).Value = "DEL";
-            (this.charts_dgv.Rows[this.charts_dgv.Rows.Count - 1].Cells[5] as DataGridViewButtonCell).Value = "Плотность";
+            //(this.charts_dgv.Rows[this.charts_dgv.Rows.Count - 1].Cells[5] as DataGridViewButtonCell).Value = "Плотность";
+            (this.charts_dgv.Rows[this.charts_dgv.Rows.Count - 1].Cells[5] as DataGridViewButtonCell).Value = "Подробнее";
         }
 
 
@@ -258,18 +270,22 @@ namespace GammaDisctibution
         private void reload_1()
         {
             int ind = 0;
-            foreach (Charts i in Context.chartsList)
+            foreach (Charts i in Context.chart1_density_List)
             {
-                Series old_seria = chart1.Series[ind];
+                Series old_seria = chart1_density.Series[ind];
                 string tmp = charts_dgv.Rows[ind].Cells[0].Value.ToString();
                 double k = Convert.ToDouble(charts_dgv.Rows[ind].Cells[1].Value);
                 double o = Convert.ToDouble(charts_dgv.Rows[ind].Cells[2].Value);
+                chart1_density.Series[ind] = environment.series.ChangeSeria(old_seria, ind, k, o);
 
-                chart1.Series[ind] = environment.series.ChangeSeria(old_seria, ind, k, o);
+                Series old_seria_2 = chart1_distribution.Series[ind];
+                chart1_distribution.Series[ind] = environment.distribution.ChangeSeria(old_seria_2, ind);
+
                 ind++;
             }
 
-            chart1.Update();
+            chart1_density.Update();
+            chart1_distribution.Update();
         }
 
 
@@ -280,7 +296,7 @@ namespace GammaDisctibution
 
         private void change_xRunner(object sender, EventArgs e)
         {
-            xValue_label.Text = xRunner.Value.ToString();
+            xDensityValue_label.Text = x_density_Runner.Value.ToString();
             reload_2();
         }
 
@@ -294,7 +310,7 @@ namespace GammaDisctibution
         {
             if (true)
             {
-                xRunner.Maximum = Convert.ToInt32(x_limit2_textBox.Text);
+                x_density_Runner.Maximum = Convert.ToInt32(x_limit2_textBox.Text);
 
                 if ((sender as TextBox).Text != "")
                 {
@@ -311,22 +327,22 @@ namespace GammaDisctibution
         private void reload_2()
         {
             // распределение
-            Series old_seria = chart2.Series[0];
+            Series old_seria = chart2_density.Series[0];
             double k = Convert.ToDouble(k2_textBox.Text);
             double o = Convert.ToDouble(o2_textBox.Text);
-            chart2.Series[0] = environment.series.ChangeSeria(old_seria, 0, k, o, 2);
+            chart2_density.Series[0] = environment.series.ChangeSeria(old_seria, 0, k, o, 2);
 
             Context.singleChart = new Charts(0, 1, 1, Color.Blue.ToArgb().ToString(), environment.memory.last_points);
 
             // значение x
-            int x = Convert.ToInt32(xValue_label.Text);
-            double y = chart2.Series[0].Points.FirstOrDefault(x_ => x_.XValue == x).YValues[0];
-            yValue_label.Text = Math.Round(y, 5).ToString();
-            chart2.Series[1].Points.Clear();
-            chart2.Series[1].Points.AddXY(x, y);
-            chart2.Series[1].Points.AddXY(x, 0);
+            int x = Convert.ToInt32(xDensityValue_label.Text);
+            double y = chart2_density.Series[0].Points.FirstOrDefault(x_ => x_.XValue == x).YValues[0];
+            yDensityValue_label.Text = Math.Round(y, 5).ToString();
+            chart2_density.Series[1].Points.Clear();
+            chart2_density.Series[1].Points.AddXY(x, y);
+            chart2_density.Series[1].Points.AddXY(x, 0);
 
-            chart2.Update();
+            chart2_density.Update();
         }
 
         #endregion
