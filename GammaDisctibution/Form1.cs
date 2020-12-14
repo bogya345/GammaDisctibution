@@ -22,6 +22,8 @@ namespace GammaDisctibution
 
         private int created_series = 0;
 
+        private Form5 frm5;
+
         public Form1()
         {
             InitializeComponent();
@@ -63,6 +65,12 @@ namespace GammaDisctibution
             //this.drawSeria(new object(), new EventArgs());
 
             reload_2();
+
+            #endregion
+
+            #region 4 tab prepare
+
+            this.frm5 = new Form5();
 
             #endregion
         }
@@ -161,6 +169,7 @@ namespace GammaDisctibution
                     this.chart_bindingSource.DataSource = Context.chart1_density_List;
 
                     this.chart1_density.Series[e.RowIndex].Color = this.colorDialog1.Color;
+                    this.chart1_distribution.Series[e.RowIndex].Color = this.colorDialog1.Color;
 
                     reload_1();
                     this.charts_dgv.Refresh();
@@ -179,6 +188,13 @@ namespace GammaDisctibution
                     this.chart_bindingSource.RemoveAt(e.RowIndex);
                     this.charts_dgv.Update();
                 }
+            }
+
+            // ячейка для удаления строки
+            if (e.ColumnIndex == 5)
+            {
+                Form4 frm = new Form4(this.chart1_density.Series[e.RowIndex], this.chart1_distribution.Series[e.RowIndex]);
+                frm.ShowDialog();
             }
         }
 
@@ -313,7 +329,7 @@ namespace GammaDisctibution
             if (true)
             {
                 x_density_Runner.Maximum = Convert.ToInt32(x_limit2_textBox.Text);
-                x_distribution_Runner.Maximum = Convert.ToInt32(x_limit2_textBox.Text);
+                x_distribution_Runner.Maximum = Convert.ToInt32(x_limit2_textBox.Text) - 1;
 
                 if ((sender as TextBox).Text != "")
                 {
@@ -353,7 +369,8 @@ namespace GammaDisctibution
             #region Распределение
             // распределение
             Series old_seria_2 = chart2_distribution.Series[0];
-            chart2_distribution.Series[0] = environment.distribution.ChangeSeria(old_seria_2, 0, 2);
+            //chart2_distribution.Series[0] = environment.distribution.ChangeSeria(old_seria_2, 0, 2);
+            chart2_distribution.Series[0] = Context.singleChart.getDistributionAsSeria();
 
             //Context.singleChart = new Charts(0, 1, 1, Color.Orange.ToArgb().ToString(), );
 
@@ -361,13 +378,39 @@ namespace GammaDisctibution
             int x2 = Convert.ToInt32(xDistributionValue_label.Text);
             double y2 = chart2_distribution.Series[0].Points.FirstOrDefault(x_ => x_.XValue == x2).YValues[0];
             yDistributionValue_label.Text = Math.Round(y2, 5).ToString();
-
             chart2_distribution.Series[1].Points.Clear();
-            chart2_distribution.Series[1].Points.AddXY(x2, y2);
-            chart2_distribution.Series[1].Points.AddXY(x2, 0);
 
-            //chart2_distribution.Update();
+            chart2_distribution.Series[1].Points.AddXY(x2 + 0.0001, 0);
+            chart2_distribution.Series[1].Points.AddXY(x2 + 0.0001, y2);
+
+            //chart2_distribution.Series[1].Points.AddXY(x2, 0);
+            //chart2_distribution.Series[1].Points.AddXY(x2, y2);
+
+            chart2_distribution.Update();
             #endregion
+        }
+
+        private void switch_runners(object sender, TabControlEventArgs e)
+        {
+            switch (e.TabPageIndex)
+            {
+                case 0:
+                    {
+                        density_groupBox.Enabled = true;
+                        distribution_groupBox.Enabled = false;
+                        return;
+                    }
+                case 1:
+                    {
+                        density_groupBox.Enabled = false;
+                        distribution_groupBox.Enabled = true;
+                        return;
+                    }
+                default:
+                    {
+                        throw new Exception();
+                    }
+            }
         }
 
         #endregion
@@ -427,8 +470,40 @@ namespace GammaDisctibution
 
         #region 4 Tab - Примеры
 
+
+
         #endregion
 
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Form3 frm = new Form3();
+            frm.pictureBox1.Load(@"D:\Unic\Надежность систем\Projects\GammaDisctibution\GammaDisctibution\View\ex1_solution.jpg");
+            frm.Show();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Form3 frm = new Form3();
+            frm.pictureBox1.Load(@"D:\Unic\Надежность систем\Projects\GammaDisctibution\GammaDisctibution\View\ex2_solution.jpg");
+            frm.Show();
+        }
+
+        private string lastTag;
+        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if ((sender as ListView).SelectedItems.Count == 1)
+            {
+                if (this.lastTag == (sender as ListView).SelectedItems[0].Tag.ToString())
+                {
+                    return;
+                }
+
+                this.lastTag = (sender as ListView).SelectedItems[0].Tag.ToString();
+                exTabs.TabPages.Clear();
+
+                exTabs.TabPages.Add(frm5.getPage(this.lastTag));
+            }
+        }
     }
 
 }

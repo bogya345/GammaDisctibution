@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace GammaDisctibution.Models
 {
@@ -18,11 +19,26 @@ namespace GammaDisctibution.Models
             this.points_density = new List<MyPoint>(points);
 
             this.points_distribution = new List<MyPoint>();
-            this.points_distribution.Add(new MyPoint(0, 0));
+            //this.points_distribution.Add(new MyPoint(0, 0));
 
-            for (int i = 1; i < this.points_density.Count; i++)
+            for (int i = 0; i < this.points_density.Count - 1; i++)
             {
-                points_distribution.Add(new MyPoint(i, (this.points_density[i].Y + this.points_distribution.Last().Y)));
+                /// сказали так низя, но оно вроде и можно
+                //points_distribution.Add(new MyPoint(i, (this.points_density[i].Y + this.points_distribution.Last().Y)));
+
+                double tmp;
+
+                //double tmp = Math.Round(((this.points_density[i].Y + this.points_density[i + 1].Y) / 2), 1);
+                if (this.points_distribution.Count == 0)
+                {
+                    tmp = Math.Round(((this.points_density[i].Y + this.points_density[i + 1].Y) / 2) + 0.0, 2);
+                }
+                else
+                {
+                    tmp = Math.Round(((this.points_density[i].Y + this.points_density[i + 1].Y) / 2) + points_distribution.Last().Y, 2);
+                }
+
+                points_distribution.Add(new MyPoint(i, tmp));
             }
 
         }
@@ -48,6 +64,19 @@ namespace GammaDisctibution.Models
         public List<MyPoint> getPoints_distribution() { return this.points_distribution; }
 
 
+        public Series getDistributionAsSeria()
+        {
+            Series ser = new Series();
+            ser.Color = Color.Orange;
+
+            foreach (MyPoint i in this.points_distribution)
+            {
+                ser.Points.AddXY(i.X, i.Y);
+            }
+
+            return ser;
+        }
+
         public override string ToString()
         {
             return string.Format("#{0} -- K= {1} | O= {2}", uid, k_value, o_value);
@@ -63,6 +92,11 @@ namespace GammaDisctibution.Models
         {
             this.X = x;
             this.Y = y;
+        }
+
+        public override string ToString()
+        {
+            return string.Format("X=={0},Y=={1}", this.X, this.Y);
         }
     }
 }

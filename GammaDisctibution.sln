@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.30523.141
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GammaDisctibution", "GammaDisctibution\GammaDisctibution.csproj", "{FE2E7E18-B786-4F0D-9E45-7B7FBC82EE22}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestProject1", "UnitTestProject1\UnitTestProject1.csproj", "{A406D5C5-D022-49AB-997C-D66151391A75}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{FE2E7E18-B786-4F0D-9E45-7B7FBC82EE22}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE2E7E18-B786-4F0D-9E45-7B7FBC82EE22}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE2E7E18-B786-4F0D-9E45-7B7FBC82EE22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A406D5C5-D022-49AB-997C-D66151391A75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A406D5C5-D022-49AB-997C-D66151391A75}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A406D5C5-D022-49AB-997C-D66151391A75}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A406D5C5-D022-49AB-997C-D66151391A75}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

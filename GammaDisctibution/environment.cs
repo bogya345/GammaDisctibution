@@ -201,7 +201,7 @@ namespace GammaDisctibution
 
                     //List<double> resses = new List<double>();
 
-                    for (double i = 0.000001; i < x_limit + 1; i = Math.Round(++i))
+                    for (double i = 0; i < x_limit + 1; i = Math.Round(i + 1, 3))
                     {
                         // prepare
 
@@ -308,11 +308,18 @@ namespace GammaDisctibution
             public static IEnumerable<double> MyGammaDistribution_Full(List<double> sample, double x_limit)
             {
                 List<double> res = new List<double>();
-                res.Add(0);
 
-                for (int i = 1; i < sample.Count; i++)
+                /// говорят тема херня, но почти работало
+                //res.Add(0);
+                //for (int i = 1; i < sample.Count; i++)
+                //{
+                //    res.Add(sample[i] + res.Last());
+                //}
+
+                for (int i = 0; i < sample.Count - 1; i++)
                 {
-                    res.Add(sample[i] + res.Last());
+                    double tmp = Math.Round(sample[i] + sample[i + 1], 2) / 2;
+                    res.Add(tmp);
                 }
 
                 return res;
